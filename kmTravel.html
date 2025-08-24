@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,6 +23,7 @@
         }
     </style>
 </head>
+
 <body class="bg-gray-50 text-gray-800 font-sans">
     <!-- 导航栏 -->
     <header class="bg-blue-600 text-white shadow-md sticky top-0 z-50">
@@ -53,7 +55,8 @@
     <main class="container mx-auto px-4 py-8">
         <!-- 封面图 -->
         <section class="relative h-64 md:h-96 rounded-lg overflow-hidden mb-10">
-            <img src="https://images.unsplash.com/photo-1512585867935-7b5615244b1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="梅州风景" class="w-full h-full object-cover">
+            <img src="https://images.unsplash.com/photo-1512585867935-7b5615244b1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                alt="梅州风景" class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
                 <div class="p-6 text-white">
                     <h2 class="text-3xl md:text-4xl font-bold mb-2">梅州两天一晚精华游</h2>
@@ -70,22 +73,23 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4" id="weatherInfo">
                 <div class="bg-blue-50 p-4 rounded-lg text-center">
                     <p class="text-sm text-gray-500">日期</p>
-                    <p class="text-xl font-bold">2024年8月25日</p>
+                    <p class="text-xl font-bold">2025年8月25-26日</p>
                 </div>
                 <div class="bg-blue-50 p-4 rounded-lg text-center">
                     <p class="text-sm text-gray-500">温度</p>
-                    <p class="text-xl font-bold">26-35°C</p>
+                    <p class="text-xl font-bold">35-37°C</p>
                 </div>
                 <div class="bg-blue-50 p-4 rounded-lg text-center">
                     <p class="text-sm text-gray-500">天气</p>
-                    <p class="text-xl font-bold">阵雨转多云</p>
+                    <p class="text-xl font-bold">多云</p>
                 </div>
                 <div class="bg-blue-50 p-4 rounded-lg text-center">
                     <p class="text-sm text-gray-500">风力</p>
                     <p class="text-xl font-bold">小于3级</p>
                 </div>
             </div>
-            <p class="mt-4 text-gray-600"><i class="fa fa-info-circle text-blue-500 mr-1"></i> 天气较炎热，有阵雨，建议做好防晒和防雨措施，携带足够的饮用水。</p>
+            <p class="mt-4 text-gray-600"><i class="fa fa-info-circle text-blue-500 mr-1"></i> 天气炎热，建议做好防晒措施，携带足够的饮用水。
+            </p>
         </section>
 
         <!-- 行程概览 -->
@@ -102,39 +106,43 @@
                     <div class="p-6">
                         <ul class="space-y-4">
                             <li class="flex items-start">
-                                <div class="bg-blue-100 rounded-full w-8 h-8 flex items-center justify-center text-blue-600 mr-3 mt-1 flex-shrink-0">
-                                    <i class="fa fa-clock-o"></i>
+                                <div
+                                    class="bg-blue-100 rounded-full w-8 h-8 flex items-center justify-center text-blue-600 mr-3 mt-1 flex-shrink-0">
+                                    <i class="fa fa-train"></i>
                                 </div>
                                 <div>
-                                    <p class="font-bold">09:00-11:30 参观叶剑英纪念园</p>
-                                    <p class="text-gray-600 mt-1">了解叶剑英元帅的生平事迹，感受红色文化。</p>
+                                    <p class="font-bold">08:00-09:30 陆丰→丰顺站</p>
+                                    <p class="text-gray-600 mt-1">乘坐高铁，二等座票价约83元，全程约1.5小时。</p>
                                 </div>
                             </li>
                             <li class="flex items-start">
-                                <div class="bg-blue-100 rounded-full w-8 h-8 flex items-center justify-center text-blue-600 mr-3 mt-1 flex-shrink-0">
-                                    <i class="fa fa-cutlery"></i>
+                                <div
+                                    class="bg-blue-100 rounded-full w-8 h-8 flex items-center justify-center text-blue-600 mr-3 mt-1 flex-shrink-0">
+                                    <i class="fa fa-train"></i>
                                 </div>
                                 <div>
-                                    <p class="font-bold">12:00-13:30 午餐</p>
-                                    <p class="text-gray-600 mt-1">在附近餐厅用餐，推荐客家菜，如梅菜扣肉、酿豆腐等。</p>
+                                    <p class="font-bold">10:00-10:30 丰顺站→梅州西站</p>
+                                    <p class="text-gray-600 mt-1">乘坐高铁，二等座票价约29元，全程约30分钟。</p>
                                 </div>
                             </li>
                             <li class="flex items-start">
-                                <div class="bg-blue-100 rounded-full w-8 h-8 flex items-center justify-center text-blue-600 mr-3 mt-1 flex-shrink-0">
+                                <div
+                                    class="bg-blue-100 rounded-full w-8 h-8 flex items-center justify-center text-blue-600 mr-3 mt-1 flex-shrink-0">
                                     <i class="fa fa-tree"></i>
                                 </div>
                                 <div>
-                                    <p class="font-bold">14:00-17:00 游览龙归寨瀑布</p>
-                                    <p class="text-gray-600 mt-1">欣赏壮观的瀑布景观，拍照留念。</p>
+                                    <p class="font-bold">11:00-16:00 游览龙归寨瀑布</p>
+                                    <p class="text-gray-600 mt-1">门票48元/人，欣赏粤东第一瀑的壮观景色，拍照留念。</p>
                                 </div>
                             </li>
                             <li class="flex items-start">
-                                <div class="bg-blue-100 rounded-full w-8 h-8 flex items-center justify-center text-blue-600 mr-3 mt-1 flex-shrink-0">
+                                <div
+                                    class="bg-blue-100 rounded-full w-8 h-8 flex items-center justify-center text-blue-600 mr-3 mt-1 flex-shrink-0">
                                     <i class="fa fa-hotel"></i>
                                 </div>
                                 <div>
-                                    <p class="font-bold">18:00-19:30 入住酒店并晚餐</p>
-                                    <p class="text-gray-600 mt-1">推荐梅州迎宾馆或客天下国际大酒店。</p>
+                                    <p class="font-bold">17:00-18:00 梅州站入住</p>
+                                    <p class="text-gray-600 mt-1">推荐丽呈睿轩酒店，价格约200元/晚。</p>
                                 </div>
                             </li>
                         </ul>
@@ -149,46 +157,53 @@
                     <div class="p-6">
                         <ul class="space-y-4">
                             <li class="flex items-start">
-                                <div class="bg-green-100 rounded-full w-8 h-8 flex items-center justify-center text-green-600 mr-3 mt-1 flex-shrink-0">
-                                    <i class="fa fa-coffee"></i>
-                                </div>
-                                <div>
-                                    <p class="font-bold">08:30-09:30 酒店早餐</p>
-                                </div>
-                            </li>
-                            <li class="flex items-start">
-                                <div class="bg-green-100 rounded-full w-8 h-8 flex items-center justify-center text-green-600 mr-3 mt-1 flex-shrink-0">
-                                    <i class="fa fa-building"></i>
-                                </div>
-                                <div>
-                                    <p class="font-bold">10:00-12:30 游览客天下景区</p>
-                                    <p class="text-gray-600 mt-1">体验客家民俗文化，欣赏山水景观。</p>
-                                </div>
-                            </li>
-                            <li class="flex items-start">
-                                <div class="bg-green-100 rounded-full w-8 h-8 flex items-center justify-center text-green-600 mr-3 mt-1 flex-shrink-0">
-                                    <i class="fa fa-cutlery"></i>
-                                </div>
-                                <div>
-                                    <p class="font-bold">13:00-14:30 午餐</p>
-                                    <p class="text-gray-600 mt-1">在景区内用餐。</p>
-                                </div>
-                            </li>
-                            <li class="flex items-start">
-                                <div class="bg-green-100 rounded-full w-8 h-8 flex items-center justify-center text-green-600 mr-3 mt-1 flex-shrink-0">
+                                <div
+                                    class="bg-green-100 rounded-full w-8 h-8 flex items-center justify-center text-green-600 mr-3 mt-1 flex-shrink-0">
                                     <i class="fa fa-university"></i>
                                 </div>
                                 <div>
-                                    <p class="font-bold">15:00-17:00 参观泰安楼</p>
-                                    <p class="text-gray-600 mt-1">了解客家传统建筑文化，感受历史底蕴。</p>
+                                    <p class="font-bold">09:00-11:00 参观千佛塔</p>
+                                    <p class="text-gray-600 mt-1">门票10元/人，参观梅州著名的佛教圣地。</p>
                                 </div>
                             </li>
                             <li class="flex items-start">
-                                <div class="bg-green-100 rounded-full w-8 h-8 flex items-center justify-center text-green-600 mr-3 mt-1 flex-shrink-0">
-                                    <i class="fa fa-car"></i>
+                                <div
+                                    class="bg-green-100 rounded-full w-8 h-8 flex items-center justify-center text-green-600 mr-3 mt-1 flex-shrink-0">
+                                    <i class="fa fa-cutlery"></i>
                                 </div>
                                 <div>
-                                    <p class="font-bold">17:30 返程</p>
+                                    <p class="font-bold">11:30-13:00 客家菜午餐</p>
+                                    <p class="text-gray-600 mt-1">品尝正宗客家菜，人均约50元。</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <div
+                                    class="bg-green-100 rounded-full w-8 h-8 flex items-center justify-center text-green-600 mr-3 mt-1 flex-shrink-0">
+                                    <i class="fa fa-building"></i>
+                                </div>
+                                <div>
+                                    <p class="font-bold">13:30-15:30 参观客家博物馆</p>
+                                    <p class="text-gray-600 mt-1">免费参观，了解客家文化的历史与发展。</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <div
+                                    class="bg-green-100 rounded-full w-8 h-8 flex items-center justify-center text-green-600 mr-3 mt-1 flex-shrink-0">
+                                    <i class="fa fa-shopping-bag"></i>
+                                </div>
+                                <div>
+                                    <p class="font-bold">16:00-17:30 游览北街</p>
+                                    <p class="text-gray-600 mt-1">漫步历史街区，感受梅州的市井文化。</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <div
+                                    class="bg-green-100 rounded-full w-8 h-8 flex items-center justify-center text-green-600 mr-3 mt-1 flex-shrink-0">
+                                    <i class="fa fa-train"></i>
+                                </div>
+                                <div>
+                                    <p class="font-bold">18:00 返程</p>
+                                    <p class="text-gray-600 mt-1">乘坐高铁返回陆丰，二等座票价约112元。</p>
                                 </div>
                             </li>
                         </ul>
@@ -203,34 +218,11 @@
                 <i class="fa fa-map-marker mr-2"></i>景点介绍
             </h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- 叶剑英纪念园 -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover">
-                    <div class="h-48 overflow-hidden">
-                        <img src="https://picsum.photos/800/400?random=1" alt="叶剑英纪念园" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-blue-600">叶剑英纪念园</h3>
-                        <div class="flex items-center text-yellow-500 mb-3">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star-half-o"></i>
-                            <span class="text-gray-600 ml-1">4A景区</span>
-                        </div>
-                        <p class="text-gray-600 mb-4">叶剑英纪念园是为纪念伟大的无产阶级革命家、政治家、军事家叶剑英元帅而建的综合性纪念园，位于梅州市梅县区雁洋镇。</p>
-                        <div class="flex justify-between text-sm text-gray-500 mb-4">
-                            <span><i class="fa fa-clock-o mr-1"></i> 开放时间: 08:30-17:30</span>
-                            <span><i class="fa fa-ticket mr-1"></i> 门票: 免费</span>
-                        </div>
-                        <button class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors attraction-detail" data-id="1">查看详情</button>
-                    </div>
-                </div>
-
                 <!-- 龙归寨瀑布 -->
                 <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover">
                     <div class="h-48 overflow-hidden">
-                        <img src="https://picsum.photos/800/400?random=2" alt="龙归寨瀑布" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        <img src="https://picsum.photos/800/400?random=2" alt="龙归寨瀑布"
+                            class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl font-bold mb-2 text-blue-600">龙归寨瀑布</h3>
@@ -243,19 +235,48 @@
                         <p class="text-gray-600 mb-4">龙归寨瀑布是粤东最大的瀑布，位于梅州市丰顺县汤坑镇，落差约125米，宽约62米，被誉为"粤东第一瀑"。</p>
                         <div class="flex justify-between text-sm text-gray-500 mb-4">
                             <span><i class="fa fa-clock-o mr-1"></i> 开放时间: 08:00-18:00</span>
-                            <span><i class="fa fa-ticket mr-1"></i> 门票: 50元</span>
+                            <span><i class="fa fa-ticket mr-1"></i> 门票: 48元</span>
                         </div>
-                        <button class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors attraction-detail" data-id="2">查看详情</button>
+                        <button
+                            class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors attraction-detail"
+                            data-id="1">查看详情</button>
                     </div>
                 </div>
 
-                <!-- 客天下景区 -->
+                <!-- 千佛塔 -->
                 <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover">
                     <div class="h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="客天下景区" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        <img src="https://picsum.photos/800/400?random=3" alt="千佛塔"
+                            class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-blue-600">客天下景区</h3>
+                        <h3 class="text-xl font-bold mb-2 text-blue-600">千佛塔</h3>
+                        <div class="flex items-center text-yellow-500 mb-3">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <span class="text-gray-600 ml-1">宗教圣地</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">千佛塔是梅州市著名的佛教圣地，位于梅州市梅江区，塔内供奉着千尊佛像，历史悠久，建筑精美。</p>
+                        <div class="flex justify-between text-sm text-gray-500 mb-4">
+                            <span><i class="fa fa-clock-o mr-1"></i> 开放时间: 08:00-17:30</span>
+                            <span><i class="fa fa-ticket mr-1"></i> 门票: 10元</span>
+                        </div>
+                        <button
+                            class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors attraction-detail"
+                            data-id="2">查看详情</button>
+                    </div>
+                </div>
+
+                <!-- 客家博物馆 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://picsum.photos/800/400?random=4" alt="客家博物馆"
+                            class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 text-blue-600">客家博物馆</h3>
                         <div class="flex items-center text-yellow-500 mb-3">
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
@@ -263,34 +284,39 @@
                             <i class="fa fa-star"></i>
                             <span class="text-gray-600 ml-1">4A景区</span>
                         </div>
-                        <p class="text-gray-600 mb-4">客天下景区是集客家文化、生态旅游、娱乐休闲为一体的综合性旅游景区，位于梅州市梅江区三角镇。</p>
+                        <p class="text-gray-600 mb-4">客家博物馆是了解客家文化的重要窗口，展示了客家民系的历史、文化、艺术和生活习俗。</p>
                         <div class="flex justify-between text-sm text-gray-500 mb-4">
-                            <span><i class="fa fa-clock-o mr-1"></i> 开放时间: 08:00-18:00</span>
-                            <span><i class="fa fa-ticket mr-1"></i> 门票: 120元</span>
+                            <span><i class="fa fa-clock-o mr-1"></i> 开放时间: 09:00-17:00</span>
+                            <span><i class="fa fa-ticket mr-1"></i> 门票: 免费</span>
                         </div>
-                        <button class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors attraction-detail" data-id="3">查看详情</button>
+                        <button
+                            class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors attraction-detail"
+                            data-id="3">查看详情</button>
                     </div>
                 </div>
 
-                <!-- 泰安楼 -->
+                <!-- 北街 -->
                 <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover">
                     <div class="h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="泰安楼" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        <img src="https://picsum.photos/800/400?random=5" alt="北街"
+                            class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-blue-600">泰安楼</h3>
+                        <h3 class="text-xl font-bold mb-2 text-blue-600">北街</h3>
                         <div class="flex items-center text-yellow-500 mb-3">
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
-                            <span class="text-gray-600 ml-1">3A景区</span>
+                            <span class="text-gray-600 ml-1">历史街区</span>
                         </div>
-                        <p class="text-gray-600 mb-4">泰安楼是中国现存最完整的客家方形土楼之一，位于梅州市大埔县湖寮镇，始建于清乾隆二十八年（1763年）。</p>
+                        <p class="text-gray-600 mb-4">北街是梅州市的历史文化街区，保留了许多传统建筑，有各种特色小店和当地美食，是体验梅州市井文化的好去处。</p>
                         <div class="flex justify-between text-sm text-gray-500 mb-4">
-                            <span><i class="fa fa-clock-o mr-1"></i> 开放时间: 08:30-17:30</span>
-                            <span><i class="fa fa-ticket mr-1"></i> 门票: 20元</span>
+                            <span><i class="fa fa-clock-o mr-1"></i> 开放时间: 全天</span>
+                            <span><i class="fa fa-ticket mr-1"></i> 门票: 免费</span>
                         </div>
-                        <button class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors attraction-detail" data-id="4">查看详情</button>
+                        <button
+                            class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors attraction-detail"
+                            data-id="4">查看详情</button>
                     </div>
                 </div>
             </div>
@@ -304,8 +330,9 @@
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
                 <div class="p-4 bg-gray-100 border-b flex justify-between items-center">
                     <h3 class="font-bold">行程路线图</h3>
-                    <a href="https://uri.amap.com/navigation?from=116.1234,24.3567&to=116.2345,24.4678&mode=car" target="_blank" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center">
-                        <i class="fa fa-car mr-1"></i> 在高德地图打开
+                    <a href="https://uri.amap.com/navigation?from=115.81,22.97&to=116.12,24.29&mode=bus" target="_blank"
+                        class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center">
+                        <i class="fa fa-map-o mr-1"></i> 在高德地图打开
                     </a>
                 </div>
                 <div id="mapContainer" class="w-full h-[500px]"></div>
@@ -349,7 +376,7 @@
 
     <script>
         // 移动端菜单切换
-        document.getElementById('menuBtn').addEventListener('click', function() {
+        document.getElementById('menuBtn').addEventListener('click', function () {
             const mobileMenu = document.getElementById('mobileMenu');
             mobileMenu.classList.toggle('hidden');
         });
@@ -361,28 +388,12 @@
         const modalContent = document.getElementById('modalContent');
 
         document.querySelectorAll('.attraction-detail').forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function () {
                 const id = this.getAttribute('data-id');
                 let title, content;
 
-                switch(id) {
+                switch (id) {
                     case '1':
-                        title = '叶剑英纪念园';
-                        content = `
-                            <div class="mb-4">
-                                <img src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="叶剑英纪念园" class="w-full h-64 object-cover rounded-lg">
-                            </div>
-                            <h4 class="text-lg font-bold mb-2">景点介绍</h4>
-                            <p class="mb-4">叶剑英纪念园是为纪念伟大的无产阶级革命家、政治家、军事家叶剑英元帅而建的综合性纪念园，位于梅州市梅县区雁洋镇。纪念园占地面积482亩，由叶剑英纪念广场、叶剑英纪念馆、叶剑英故居、叶家祠等部分组成。</p>
-                            <h4 class="text-lg font-bold mb-2">开放时间</h4>
-                            <p class="mb-4">08:30-17:30（周一闭馆，法定节假日除外）</p>
-                            <h4 class="text-lg font-bold mb-2">门票信息</h4>
-                            <p class="mb-4">免费参观，需携带有效身份证件登记。</p>
-                            <h4 class="text-lg font-bold mb-2">交通指南</h4>
-                            <p>可乘坐梅州城区至雁洋镇的公交车，在叶剑英纪念园站下车即到。</p>
-                        `;
-                        break;
-                    case '2':
                         title = '龙归寨瀑布';
                         content = `
                             <div class="mb-4">
@@ -393,41 +404,57 @@
                             <h4 class="text-lg font-bold mb-2">开放时间</h4>
                             <p class="mb-4">08:00-18:00</p>
                             <h4 class="text-lg font-bold mb-2">门票信息</h4>
-                            <p class="mb-4">成人票50元/人，儿童票25元/人（1.2米-1.4米），1.2米以下儿童免费。</p>
+                            <p class="mb-4">成人票48元/人，儿童票25元/人（1.2米-1.4米），1.2米以下儿童免费。</p>
                             <h4 class="text-lg font-bold mb-2">交通指南</h4>
                             <p>从梅州城区出发，可乘坐至丰顺县的班车，然后转乘至龙归寨瀑布的公交车或出租车。</p>
                         `;
                         break;
-                    case '3':
-                        title = '客天下景区';
+                    case '2':
+                        title = '千佛塔';
                         content = `
                             <div class="mb-4">
-                                <img src="https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="客天下景区" class="w-full h-64 object-cover rounded-lg">
+                                <img src="https://picsum.photos/800/400?random=3" alt="千佛塔" class="w-full h-64 object-cover rounded-lg">
                             </div>
                             <h4 class="text-lg font-bold mb-2">景点介绍</h4>
-                            <p class="mb-4">客天下景区是集客家文化、生态旅游、娱乐休闲为一体的综合性旅游景区，位于梅州市梅江区三角镇。景区内有客家小镇、圣人谷、千亩杜鹃园、体育公园等多个景点，是了解客家文化、体验客家风情的好去处。</p>
+                            <p class="mb-4">千佛塔是梅州市著名的佛教圣地，位于梅州市梅江区。该塔始建于唐代，是为了纪念唐僧取经而建，塔内供奉着千尊佛像，每尊佛像都雕刻精美，栩栩如生。塔高九层，登塔远眺，可以俯瞰梅州城区全景。</p>
                             <h4 class="text-lg font-bold mb-2">开放时间</h4>
-                            <p class="mb-4">08:00-18:00</p>
+                            <p class="mb-4">08:00-17:30</p>
                             <h4 class="text-lg font-bold mb-2">门票信息</h4>
-                            <p class="mb-4">成人票120元/人，儿童票60元/人（1.2米-1.4米），1.2米以下儿童免费。</p>
+                            <p class="mb-4">成人票10元/人，学生票5元/人（凭学生证），1.2米以下儿童免费。</p>
                             <h4 class="text-lg font-bold mb-2">交通指南</h4>
-                            <p>可乘坐梅州城区至客天下景区的公交车，在客天下站下车即到。</p>
+                            <p>可乘坐梅州城区公交车在千佛塔站下车，或乘坐出租车直达。</p>
+                        `;
+                        break;
+                    case '3':
+                        title = '客家博物馆';
+                        content = `
+                            <div class="mb-4">
+                                <img src="https://picsum.photos/800/400?random=4" alt="客家博物馆" class="w-full h-64 object-cover rounded-lg">
+                            </div>
+                            <h4 class="text-lg font-bold mb-2">景点介绍</h4>
+                            <p class="mb-4">客家博物馆是了解客家文化的重要窗口，位于梅州市梅江区。博物馆展示了客家民系的历史、文化、艺术和生活习俗，包括客家先民的迁徙历史、客家建筑、客家民俗、客家艺术等方面的内容。通过参观，可以深入了解客家文化的独特魅力。</p>
+                            <h4 class="text-lg font-bold mb-2">开放时间</h4>
+                            <p class="mb-4">09:00-17:00（周一闭馆，法定节假日除外）</p>
+                            <h4 class="text-lg font-bold mb-2">门票信息</h4>
+                            <p class="mb-4">免费参观，需携带有效身份证件登记。</p>
+                            <h4 class="text-lg font-bold mb-2">交通指南</h4>
+                            <p>可乘坐梅州城区公交车在客家博物馆站下车，或乘坐出租车直达。</p>
                         `;
                         break;
                     case '4':
-                        title = '泰安楼';
+                        title = '北街';
                         content = `
                             <div class="mb-4">
-                                <img src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="泰安楼" class="w-full h-64 object-cover rounded-lg">
+                                <img src="https://picsum.photos/800/400?random=5" alt="北街" class="w-full h-64 object-cover rounded-lg">
                             </div>
                             <h4 class="text-lg font-bold mb-2">景点介绍</h4>
-                            <p class="mb-4">泰安楼是中国现存最完整的客家方形土楼之一，位于梅州市大埔县湖寮镇，始建于清乾隆二十八年（1763年）。土楼呈方形，边长49米，高11米，共有三层，每层有34个房间，外墙用生土夯筑而成，非常坚固。</p>
+                            <p class="mb-4">北街是梅州市的历史文化街区，位于梅州市梅江区。这里保留了许多传统建筑，包括骑楼、祠堂、庙宇等，展现了梅州的历史风貌。街区内有各种特色小店、手工艺品店和当地美食店，可以品尝到正宗的客家美食，购买到特色的客家手工艺品。</p>
                             <h4 class="text-lg font-bold mb-2">开放时间</h4>
-                            <p class="mb-4">08:30-17:30</p>
+                            <p class="mb-4">全天开放</p>
                             <h4 class="text-lg font-bold mb-2">门票信息</h4>
-                            <p class="mb-4">成人票20元/人，儿童票10元/人（1.2米-1.4米），1.2米以下儿童免费。</p>
+                            <p class="mb-4">免费参观</p>
                             <h4 class="text-lg font-bold mb-2">交通指南</h4>
-                            <p>从梅州城区出发，可乘坐至大埔县的班车，然后转乘至泰安楼的公交车或出租车。</p>
+                            <p>可乘坐梅州城区公交车在北街站下车，或乘坐出租车直达。</p>
                         `;
                         break;
                 }
@@ -438,26 +465,26 @@
             });
         });
 
-        closeModal.addEventListener('click', function() {
+        closeModal.addEventListener('click', function () {
             modal.classList.add('hidden');
         });
 
         // 点击模态框外部关闭
-        modal.addEventListener('click', function(e) {
+        modal.addEventListener('click', function (e) {
             if (e.target === modal) {
                 modal.classList.add('hidden');
             }
         });
 
         // 初始化地图
-        window.onload = function() {
-            // 替换为您的高德地图API密钥
-            const apiKey = '您的高德地图API密钥';
+        window.onload = function () {
+            // 确保使用了正确的高德地图API密钥
+            const apiKey = '93336cce45884cdac08371812275ede4';
 
             // 初始化地图
             const map = new AMap.Map('mapContainer', {
                 zoom: 10,
-                center: [116.1234, 24.3567], // 梅州市中心坐标
+                center: [116.12, 24.29], // 梅州市中心坐标
                 viewMode: '3D'
             });
 
@@ -476,11 +503,13 @@
 
             // 景点坐标（注：这些坐标是近似值，建议使用精确坐标更新）
             const attractions = [
-                {name: '叶剑英纪念园', position: [116.12, 24.35], icon: 'https://webapi.amap.com/theme/v1.3/markers/n/mark_r.png'},
-                {name: '龙归寨瀑布', position: [116.23, 24.47], icon: 'https://webapi.amap.com/theme/v1.3/markers/n/mark_r.png'},
-                {name: '酒店', position: [116.05, 24.31], icon: 'https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png'},
-                {name: '客天下景区', position: [116.19, 24.32], icon: 'https://webapi.amap.com/theme/v1.3/markers/n/mark_r.png'},
-                {name: '泰安楼', position: [116.21, 24.29], icon: 'https://webapi.amap.com/theme/v1.3/markers/n/mark_r.png'}
+                { name: '陆丰站', position: [115.81, 22.97], icon: 'https://webapi.amap.com/theme/v1.3/markers/n/mark_s.png' },
+                { name: '丰顺站', position: [116.12, 23.76], icon: 'https://webapi.amap.com/theme/v1.3/markers/n/mark_s.png' },
+                { name: '龙归寨瀑布', position: [116.23, 24.47], icon: 'https://webapi.amap.com/theme/v1.3/markers/n/mark_r.png' },
+                { name: '梅州站', position: [116.12, 24.29], icon: 'https://webapi.amap.com/theme/v1.3/markers/n/mark_s.png' },
+                { name: '千佛塔', position: [116.09, 24.26], icon: 'https://webapi.amap.com/theme/v1.3/markers/n/mark_r.png' },
+                { name: '客家博物馆', position: [116.11, 24.28], icon: 'https://webapi.amap.com/theme/v1.3/markers/n/mark_r.png' },
+                { name: '北街', position: [116.09, 24.29], icon: 'https://webapi.amap.com/theme/v1.3/markers/n/mark_r.png' }
             ];
 
             // 添加景点标记
@@ -498,24 +527,27 @@
                     offset: new AMap.Pixel(0, -30)
                 });
 
-                marker.on('click', function() {
+                marker.on('click', function () {
                     infoWindow.open(map, marker.getPosition());
                 });
             });
 
             // 绘制路线
-            // 第一天路线: 叶剑英纪念园 -> 龙归寨瀑布 -> 酒店（注：这些坐标是近似值，建议使用精确坐标更新）
+            // 第一天路线: 陆丰站 -> 丰顺站 -> 龙归寨瀑布 -> 梅州站
             const day1Route = [
-                [116.12, 24.35], // 叶剑英纪念园
+                [115.81, 22.97], // 陆丰站
+                [116.12, 23.76], // 丰顺站
                 [116.23, 24.47], // 龙归寨瀑布
-                [116.05, 24.31]  // 酒店
+                [116.12, 24.29]  // 梅州站
             ];
 
-            // 第二天路线: 酒店 -> 客天下景区 -> 泰安楼（注：这些坐标是近似值，建议使用精确坐标更新）
+            // 第二天路线: 梅州站 -> 千佛塔 -> 客家博物馆 -> 北街 -> 梅州站
             const day2Route = [
-                [116.05, 24.31], // 酒店
-                [116.19, 24.32], // 客天下景区
-                [116.21, 24.29]  // 泰安楼
+                [116.12, 24.29], // 梅州站
+                [116.09, 24.26], // 千佛塔
+                [116.11, 24.28], // 客家博物馆
+                [116.09, 24.29], // 北街
+                [116.12, 24.29]  // 梅州站（返程）
             ];
 
             // 添加第一天路线
@@ -536,13 +568,27 @@
                 map: map
             });
 
-            // 调整地图视野
-            const bounds = new AMap.Bounds();
-            attractions.forEach(attraction => {
-                bounds.extend(attraction.position);
-            });
-            map.setBounds(bounds, 100);
+            // 调整地图视野 - 确保所有坐标有效
+            try {
+                const bounds = new AMap.Bounds();
+                attractions.forEach(attraction => {
+                    if (attraction.position && Array.isArray(attraction.position) && attraction.position.length === 2) {
+                        bounds.extend(attraction.position);
+                    }
+                });
+
+                // 如果有有效边界则调整视野，否则设置默认视野
+                if (bounds.northeast && bounds.southwest) {
+                    map.setBounds(bounds, 100);
+                } else {
+                    map.setZoomAndCenter(10, [116.12, 24.29]);
+                }
+            } catch (error) {
+                console.log('地图视野调整失败，使用默认设置:', error);
+                map.setZoomAndCenter(10, [116.12, 24.29]);
+            }
         };
     </script>
 </body>
+
 </html>
