@@ -1,0 +1,502 @@
+<!-- 景点卡片组件 -->
+<div class="attraction-card">
+    <div class="attraction-image-container">
+        <img class="attraction-image" src="https://picsum.photos/seed/attraction1/600/400" alt="景点图片">
+        <div class="attraction-rating">
+            <span class="rating-stars">★★★★★</span>
+            <span class="rating-score">4.8</span>
+        </div>
+        <div class="attraction-tag">
+            <span>必游景点</span>
+        </div>
+    </div>
+    
+    <div class="attraction-content">
+        <h3 class="attraction-title">雁南飞茶田景区</h3>
+        
+        <div class="attraction-meta">
+            <div class="attraction-location">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>梅州市梅县区雁洋镇长教村</span>
+            </div>
+            <div class="attraction-category">
+                <span>自然景观</span>
+                <span>茶园风光</span>
+            </div>
+        </div>
+        
+        <p class="attraction-description">
+            雁南飞茶田景区是国家5A级旅游景区，融茶叶生产、加工和旅游度假于一体，拥有茶园、果园、森林等自然景观，环境优美，空气清新。
+        </p>
+        
+        <div class="attraction-info">
+            <div class="info-item">
+                <i class="fas fa-clock"></i>
+                <span>开放时间: 08:00-17:30</span>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-ticket-alt"></i>
+                <span>门票: ¥80/人</span>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-bus"></i>
+                <span>交通: 乘坐17路公交车可达</span>
+            </div>
+        </div>
+        
+        <div class="attraction-actions">
+            <button class="attraction-detail-btn">查看详情</button>
+            <button class="attraction-bookmark-btn">
+                <i class="far fa-bookmark"></i>
+                <span>收藏</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<style scoped>
+    /* 景点卡片样式 */
+    .attraction-card {
+        background-color: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    
+    .attraction-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .attraction-image-container {
+        position: relative;
+        width: 100%;
+        height: 220px;
+        overflow: hidden;
+    }
+    
+    .attraction-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+    
+    .attraction-card:hover .attraction-image {
+        transform: scale(1.05);
+    }
+    
+    .attraction-rating {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    
+    .rating-stars {
+        color: #ffc107;
+        font-size: 0.8rem;
+    }
+    
+    .rating-score {
+        font-weight: 600;
+    }
+    
+    .attraction-tag {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: linear-gradient(135deg, #ff6b6b, #ee5253);
+        color: white;
+        padding: 3px 8px;
+        border-radius: 3px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+    
+    .attraction-content {
+        padding: 15px;
+    }
+    
+    .attraction-title {
+        margin: 0 0 10px 0;
+        font-size: 1.2rem;
+        color: #2d3436;
+        font-weight: 600;
+    }
+    
+    .attraction-meta {
+        margin-bottom: 12px;
+    }
+    
+    .attraction-location {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        color: #636e72;
+        font-size: 0.9rem;
+        margin-bottom: 5px;
+    }
+    
+    .attraction-category {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+    
+    .attraction-category span {
+        background-color: #f0f2f5;
+        color: #636e72;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-size: 0.8rem;
+    }
+    
+    .attraction-description {
+        color: #636e72;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        margin-bottom: 15px;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+    
+    .attraction-info {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 15px;
+    }
+    
+    .info-item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        color: #636e72;
+        font-size: 0.85rem;
+    }
+    
+    .attraction-actions {
+        display: flex;
+        gap: 10px;
+    }
+    
+    .attraction-detail-btn {
+        flex: 1;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    .attraction-detail-btn:hover {
+        background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+    }
+    
+    .attraction-bookmark-btn {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        background-color: #f0f2f5;
+        color: #636e72;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .attraction-bookmark-btn:hover {
+        background-color: #e2e8f0;
+        color: #4a5568;
+    }
+    
+    .attraction-bookmark-btn.active {
+        background-color: #ffeaa7;
+        color: #d63031;
+    }
+    
+    /* 响应式设计 */
+    @media (max-width: 767px) {
+        .attraction-card {
+            margin-bottom: 20px;
+        }
+        
+        .attraction-actions {
+            flex-direction: column;
+        }
+        
+        .attraction-bookmark-btn {
+            justify-content: center;
+        }
+    }
+    
+    /* Font Awesome 图标样式替代 */
+    .fas,
+    .far {
+        font-family: 'Arial', sans-serif;
+        font-weight: bold;
+    }
+    
+    .fas.fa-map-marker-alt:before { content: '📍'; }
+    .fas.fa-clock:before { content: '⏰'; }
+    .fas.fa-ticket-alt:before { content: '🎫'; }
+    .fas.fa-bus:before { content: '🚌'; }
+    .far.fa-bookmark:before { content: '📌'; }
+</style>
+
+<script>
+    // 景点卡片JavaScript功能
+    document.addEventListener('DOMContentLoaded', function() {
+        // 初始化景点卡片
+        initAttractionCard();
+        
+        // 绑定收藏按钮事件
+        bindBookmarkButton();
+        
+        // 绑定查看详情按钮事件
+        bindDetailButton();
+        
+        // 添加图片懒加载
+        addImageLazyLoading();
+    });
+    
+    /**
+     * 初始化景点卡片
+     */
+    function initAttractionCard() {
+        console.log('景点卡片已初始化');
+        
+        // 添加进入视图的动画
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        const cards = document.querySelectorAll('.attraction-card');
+        cards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(card);
+        });
+    }
+    
+    /**
+     * 绑定收藏按钮事件
+     */
+    function bindBookmarkButton() {
+        const bookmarkButtons = document.querySelectorAll('.attraction-bookmark-btn');
+        
+        bookmarkButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // 切换收藏状态
+                this.classList.toggle('active');
+                
+                // 更新收藏图标
+                const icon = this.querySelector('i');
+                const text = this.querySelector('span');
+                
+                if (this.classList.contains('active')) {
+                    // 收藏成功
+                    icon.className = 'fas fa-bookmark';
+                    text.textContent = '已收藏';
+                    showToast('已添加到收藏夹');
+                    
+                    // 保存到本地存储
+                    saveToLocalStorage(this.closest('.attraction-card'));
+                } else {
+                    // 取消收藏
+                    icon.className = 'far fa-bookmark';
+                    text.textContent = '收藏';
+                    showToast('已从收藏夹移除');
+                    
+                    // 从本地存储移除
+                    removeFromLocalStorage(this.closest('.attraction-card'));
+                }
+            });
+        });
+    }
+    
+    /**
+     * 绑定查看详情按钮事件
+     */
+    function bindDetailButton() {
+        const detailButtons = document.querySelectorAll('.attraction-detail-btn');
+        
+        detailButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const card = this.closest('.attraction-card');
+                const attractionName = card.querySelector('.attraction-title').textContent;
+                
+                // 在实际项目中，这里应该跳转到景点详情页
+                console.log(`查看景点详情: ${attractionName}`);
+                
+                // 模拟跳转效果
+                showToast(`正在跳转到${attractionName}详情页...`);
+                
+                // 可以根据实际需求添加页面跳转代码
+                // window.location.href = `attraction-detail.html?id=${attractionId}`;
+            });
+        });
+    }
+    
+    /**
+     * 添加图片懒加载
+     */
+    function addImageLazyLoading() {
+        if ('IntersectionObserver' in window) {
+            const imgObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        
+                        // 如果图片有data-src属性，则使用它作为实际图片源
+                        if (img.dataset.src) {
+                            img.src = img.dataset.src;
+                            img.removeAttribute('data-src');
+                        }
+                        
+                        // 添加淡入效果
+                        img.style.opacity = '0';
+                        setTimeout(() => {
+                            img.style.transition = 'opacity 0.5s ease';
+                            img.style.opacity = '1';
+                        }, 100);
+                        
+                        imgObserver.unobserve(img);
+                    }
+                });
+            });
+            
+            const images = document.querySelectorAll('.attraction-image[data-src]');
+            images.forEach(img => imgObserver.observe(img));
+        } else {
+            // 降级处理：如果浏览器不支持IntersectionObserver，则直接加载所有图片
+            const images = document.querySelectorAll('.attraction-image[data-src]');
+            images.forEach(img => {
+                img.src = img.dataset.src;
+                img.removeAttribute('data-src');
+            });
+        }
+    }
+    
+    /**
+     * 保存收藏到本地存储
+     * @param {HTMLElement} card - 景点卡片元素
+     */
+    function saveToLocalStorage(card) {
+        const attractionName = card.querySelector('.attraction-title').textContent;
+        const imageSrc = card.querySelector('.attraction-image').src;
+        const location = card.querySelector('.attraction-location span').textContent;
+        
+        // 获取现有的收藏列表
+        let favorites = JSON.parse(localStorage.getItem('attractionFavorites')) || [];
+        
+        // 检查是否已经收藏
+        const existingIndex = favorites.findIndex(item => item.name === attractionName);
+        
+        if (existingIndex === -1) {
+            // 添加新收藏
+            favorites.push({
+                name: attractionName,
+                image: imageSrc,
+                location: location,
+                timestamp: new Date().getTime()
+            });
+            
+            // 保存到本地存储
+            localStorage.setItem('attractionFavorites', JSON.stringify(favorites));
+        }
+    }
+    
+    /**
+     * 从本地存储移除收藏
+     * @param {HTMLElement} card - 景点卡片元素
+     */
+    function removeFromLocalStorage(card) {
+        const attractionName = card.querySelector('.attraction-title').textContent;
+        
+        // 获取现有的收藏列表
+        let favorites = JSON.parse(localStorage.getItem('attractionFavorites')) || [];
+        
+        // 过滤掉要移除的收藏
+        favorites = favorites.filter(item => item.name !== attractionName);
+        
+        // 保存到本地存储
+        localStorage.setItem('attractionFavorites', JSON.stringify(favorites));
+    }
+    
+    /**
+     * 显示提示消息
+     * @param {string} message - 提示消息内容
+     */
+    function showToast(message) {
+        // 检查是否已存在toast元素
+        let toast = document.querySelector('.attraction-toast');
+        
+        if (!toast) {
+            // 创建新的toast元素
+            toast = document.createElement('div');
+            toast.className = 'attraction-toast';
+            document.body.appendChild(toast);
+            
+            // 添加toast样式
+            toast.style.position = 'fixed';
+            toast.style.top = '20px';
+            toast.style.right = '20px';
+            toast.style.background = 'rgba(0, 0, 0, 0.7)';
+            toast.style.color = 'white';
+            toast.style.padding = '10px 15px';
+            toast.style.borderRadius = '5px';
+            toast.style.zIndex = '9999';
+            toast.style.opacity = '0';
+            toast.style.transition = 'opacity 0.3s ease';
+        }
+        
+        // 设置消息内容
+        toast.textContent = message;
+        
+        // 显示toast
+        toast.style.opacity = '1';
+        
+        // 3秒后隐藏toast
+        setTimeout(() => {
+            toast.style.opacity = '0';
+        }, 3000);
+    }
+    
+    /**
+     * 更新景点卡片数据
+     * @param {Object} data - 景点数据对象
+     */
+    function updateAttractionData(data) {
+        // 此函数用于在实际项目中根据API返回的数据更新景点卡片
+        console.log('更新景点数据:', data);
+        
+        // 这里可以添加实际的数据更新逻辑
+    }
+</script>

@@ -1,0 +1,944 @@
+<!-- 地图组件 -->
+<div class="map-container">
+    <div class="map-header">
+        <h3 class="map-title">旅游目的地地图</h3>
+        <div class="map-controls">
+            <button class="map-control-btn zoom-in">
+                <i class="fas fa-plus"></i>
+            </button>
+            <button class="map-control-btn zoom-out">
+                <i class="fas fa-minus"></i>
+            </button>
+            <button class="map-control-btn reset">
+                <i class="fas fa-redo-alt"></i>
+            </button>
+            <button class="map-control-btn fullscreen">
+                <i class="fas fa-expand"></i>
+            </button>
+        </div>
+    </div>
+    
+    <div class="map-main">
+        <!-- 地图显示区域 -->
+        <div class="map-view" id="mapView">
+            <!-- 地图内容将通过JavaScript动态生成 -->
+            <div class="map-placeholder">
+                <i class="fas fa-map-marked-alt"></i>
+                <p>地图加载中...</p>
+            </div>
+        </div>
+        
+        <!-- 地图侧边栏 -->
+        <div class="map-sidebar">
+            <div class="map-filter">
+                <h4>景点类型</h4>
+                <div class="filter-options">
+                    <label class="filter-option">
+                        <input type="checkbox" name="attraction-type" value="nature" checked>
+                        <span>自然景观</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" name="attraction-type" value="culture" checked>
+                        <span>文化古迹</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" name="attraction-type" value="leisure" checked>
+                        <span>休闲娱乐</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" name="attraction-type" value="food" checked>
+                        <span>美食特产</span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="map-attractions">
+                <h4>附近景点</h4>
+                <div class="attractions-list">
+                    <!-- 景点列表将通过JavaScript动态生成 -->
+                    <div class="attraction-item" data-id="1">
+                        <div class="attraction-item-icon">
+                            <i class="fas fa-tree"></i>
+                        </div>
+                        <div class="attraction-item-info">
+                            <div class="attraction-item-name">雁南飞茶田景区</div>
+                            <div class="attraction-item-distance">2.5公里</div>
+                        </div>
+                    </div>
+                    <div class="attraction-item" data-id="2">
+                        <div class="attraction-item-icon">
+                            <i class="fas fa-mountain"></i>
+                        </div>
+                        <div class="attraction-item-info">
+                            <div class="attraction-item-name">阴那山风景区</div>
+                            <div class="attraction-item-distance">5.7公里</div>
+                        </div>
+                    </div>
+                    <div class="attraction-item" data-id="3">
+                        <div class="attraction-item-icon">
+                            <i class="fas fa-church"></i>
+                        </div>
+                        <div class="attraction-item-info">
+                            <div class="attraction-item-name">灵光寺</div>
+                            <div class="attraction-item-distance">4.2公里</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 地图信息弹窗 -->
+    <div class="map-popup" id="mapPopup">
+        <div class="map-popup-content">
+            <div class="map-popup-header">
+                <h4 class="map-popup-title">景点名称</h4>
+                <button class="map-popup-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="map-popup-body">
+                <img class="map-popup-image" src="https://picsum.photos/seed/popup1/400/300" alt="景点图片">
+                <p class="map-popup-description">景点描述信息将显示在这里。</p>
+                <div class="map-popup-info">
+                    <div class="popup-info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>景点地址</span>
+                    </div>
+                    <div class="popup-info-item">
+                        <i class="fas fa-clock"></i>
+                        <span>开放时间</span>
+                    </div>
+                    <div class="popup-info-item">
+                        <i class="fas fa-ticket-alt"></i>
+                        <span>门票信息</span>
+                    </div>
+                </div>
+                <button class="map-popup-route-btn">获取路线</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style scoped>
+    /* 地图容器样式 */
+    .map-container {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        height: 600px;
+    }
+    
+    .map-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+    
+    .map-title {
+        margin: 0;
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+    
+    .map-controls {
+        display: flex;
+        gap: 5px;
+    }
+    
+    .map-control-btn {
+        background-color: rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: white;
+        width: 36px;
+        height: 36px;
+        border-radius: 5px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: background-color 0.3s ease;
+    }
+    
+    .map-control-btn:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+    
+    .map-main {
+        display: flex;
+        flex: 1;
+        overflow: hidden;
+    }
+    
+    .map-view {
+        flex: 1;
+        background-color: #f5f5f5;
+        position: relative;
+        min-width: 0;
+    }
+    
+    .map-placeholder {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        color: #636e72;
+    }
+    
+    .map-placeholder i {
+        font-size: 4rem;
+        margin-bottom: 15px;
+        opacity: 0.5;
+    }
+    
+    .map-sidebar {
+        width: 280px;
+        background-color: #fafafa;
+        border-left: 1px solid #e0e0e0;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .map-filter {
+        padding: 15px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .map-filter h4 {
+        margin: 0 0 10px 0;
+        font-size: 1rem;
+        color: #2d3436;
+    }
+    
+    .filter-options {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .filter-option {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        color: #636e72;
+    }
+    
+    .filter-option input[type="checkbox"] {
+        cursor: pointer;
+    }
+    
+    .map-attractions {
+        flex: 1;
+        padding: 15px;
+        overflow-y: auto;
+    }
+    
+    .map-attractions h4 {
+        margin: 0 0 10px 0;
+        font-size: 1rem;
+        color: #2d3436;
+    }
+    
+    .attractions-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .attraction-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px;
+        background-color: white;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 1px solid #e0e0e0;
+    }
+    
+    .attraction-item:hover {
+        background-color: #f0f2f5;
+        transform: translateX(5px);
+    }
+    
+    .attraction-item.selected {
+        background-color: #e8f5e9;
+        border-color: #4caf50;
+    }
+    
+    .attraction-item-icon {
+        width: 36px;
+        height: 36px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        flex-shrink: 0;
+    }
+    
+    .attraction-item-info {
+        flex: 1;
+        min-width: 0;
+    }
+    
+    .attraction-item-name {
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: #2d3436;
+        margin-bottom: 2px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .attraction-item-distance {
+        font-size: 0.8rem;
+        color: #636e72;
+    }
+    
+    /* 地图弹窗样式 */
+    .map-popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        max-width: 500px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        display: none;
+    }
+    
+    .map-popup.show {
+        display: block;
+    }
+    
+    .map-popup-content {
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+    
+    .map-popup-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .map-popup-title {
+        margin: 0;
+        font-size: 1.1rem;
+        color: #2d3436;
+    }
+    
+    .map-popup-close {
+        background: none;
+        border: none;
+        font-size: 1.2rem;
+        color: #636e72;
+        cursor: pointer;
+        padding: 0;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .map-popup-close:hover {
+        color: #2d3436;
+    }
+    
+    .map-popup-body {
+        padding: 20px;
+    }
+    
+    .map-popup-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 5px;
+        margin-bottom: 15px;
+    }
+    
+    .map-popup-description {
+        color: #636e72;
+        line-height: 1.5;
+        margin-bottom: 15px;
+    }
+    
+    .map-popup-info {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 20px;
+    }
+    
+    .popup-info-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #636e72;
+        font-size: 0.9rem;
+    }
+    
+    .map-popup-route-btn {
+        width: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 12px 15px;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    .map-popup-route-btn:hover {
+        background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+    }
+    
+    /* 响应式设计 */
+    @media (max-width: 767px) {
+        .map-container {
+            height: 500px;
+        }
+        
+        .map-main {
+            flex-direction: column;
+        }
+        
+        .map-sidebar {
+            width: 100%;
+            height: 200px;
+            border-left: none;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .map-attractions {
+            overflow-y: auto;
+        }
+    }
+    
+    /* Font Awesome 图标样式替代 */
+    .fas {
+        font-family: 'Arial', sans-serif;
+        font-weight: bold;
+    }
+    
+    .fas.fa-plus:before { content: '+'; }
+    .fas.fa-minus:before { content: '-'; }
+    .fas.fa-redo-alt:before { content: '↻'; }
+    .fas.fa-expand:before { content: '↗'; }
+    .fas.fa-map-marked-alt:before { content: '🗺️'; }
+    .fas.fa-tree:before { content: '🌳'; }
+    .fas.fa-mountain:before { content: '⛰️'; }
+    .fas.fa-church:before { content: '🏛️'; }
+    .fas.fa-times:before { content: '×'; }
+    .fas.fa-map-marker-alt:before { content: '📍'; }
+    .fas.fa-clock:before { content: '⏰'; }
+    .fas.fa-ticket-alt:before { content: '🎫'; }
+</style>
+
+<script>
+    // 地图组件JavaScript功能
+    document.addEventListener('DOMContentLoaded', function() {
+        // 初始化地图
+        initMap();
+        
+        // 绑定地图控制按钮事件
+        bindMapControls();
+        
+        // 绑定景点列表事件
+        bindAttractionList();
+        
+        // 绑定弹窗关闭事件
+        bindPopupClose();
+        
+        // 绑定过滤器事件
+        bindFilterOptions();
+        
+        // 生成模拟地图标记
+        generateMapMarkers();
+    });
+    
+    /**
+     * 初始化地图
+     */
+    function initMap() {
+        console.log('地图组件已初始化');
+        
+        const mapView = document.getElementById('mapView');
+        
+        // 模拟地图加载
+        setTimeout(() => {
+            // 移除占位符
+            const placeholder = mapView.querySelector('.map-placeholder');
+            if (placeholder) {
+                placeholder.style.opacity = '0';
+                placeholder.style.transition = 'opacity 0.5s ease';
+                
+                setTimeout(() => {
+                    placeholder.remove();
+                    
+                    // 创建模拟地图背景
+                    createMapBackground();
+                }, 500);
+            }
+        }, 1000);
+    }
+    
+    /**
+     * 创建模拟地图背景
+     */
+    function createMapBackground() {
+        const mapView = document.getElementById('mapView');
+        
+        // 设置地图背景
+        mapView.style.background = 'url(https://picsum.photos/seed/map/1200/800) center/cover no-repeat';
+        
+        // 添加地图网格效果
+        const mapGrid = document.createElement('div');
+        mapGrid.className = 'map-grid';
+        mapGrid.style.position = 'absolute';
+        mapGrid.style.top = '0';
+        mapGrid.style.left = '0';
+        mapGrid.style.width = '100%';
+        mapGrid.style.height = '100%';
+        mapGrid.style.backgroundImage = 'linear-gradient(rgba(255,255,255,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.2) 1px, transparent 1px)';
+        mapGrid.style.backgroundSize = '20px 20px';
+        mapView.appendChild(mapGrid);
+    }
+    
+    /**
+     * 绑定地图控制按钮事件
+     */
+    function bindMapControls() {
+        const zoomInBtn = document.querySelector('.map-control-btn.zoom-in');
+        const zoomOutBtn = document.querySelector('.map-control-btn.zoom-out');
+        const resetBtn = document.querySelector('.map-control-btn.reset');
+        const fullscreenBtn = document.querySelector('.map-control-btn.fullscreen');
+        const mapView = document.getElementById('mapView');
+        
+        let zoomLevel = 1;
+        const maxZoom = 1.5;
+        const minZoom = 0.5;
+        
+        // 放大按钮
+        zoomInBtn.addEventListener('click', function() {
+            if (zoomLevel < maxZoom) {
+                zoomLevel += 0.1;
+                updateMapZoom();
+            }
+        });
+        
+        // 缩小按钮
+        zoomOutBtn.addEventListener('click', function() {
+            if (zoomLevel > minZoom) {
+                zoomLevel -= 0.1;
+                updateMapZoom();
+            }
+        });
+        
+        // 重置按钮
+        resetBtn.addEventListener('click', function() {
+            zoomLevel = 1;
+            updateMapZoom();
+        });
+        
+        // 全屏按钮
+        fullscreenBtn.addEventListener('click', function() {
+            if (mapView.requestFullscreen) {
+                mapView.requestFullscreen();
+            } else if (mapView.webkitRequestFullscreen) {
+                mapView.webkitRequestFullscreen();
+            } else if (mapView.msRequestFullscreen) {
+                mapView.msRequestFullscreen();
+            }
+        });
+        
+        /**
+         * 更新地图缩放
+         */
+        function updateMapZoom() {
+            mapView.style.transform = `scale(${zoomLevel})`;
+            mapView.style.transformOrigin = 'center center';
+            mapView.style.transition = 'transform 0.3s ease';
+        }
+    }
+    
+    /**
+     * 生成地图标记
+     */
+    function generateMapMarkers() {
+        const mapView = document.getElementById('mapView');
+        
+        // 模拟景点数据
+        const attractions = [
+            {
+                id: 1,
+                name: '雁南飞茶田景区',
+                type: 'nature',
+                position: { x: 30, y: 40 },
+                address: '梅州市梅县区雁洋镇长教村',
+                hours: '08:00-17:30',
+                ticket: '¥80/人',
+                description: '国家5A级旅游景区，融茶叶生产、加工和旅游度假于一体，拥有茶园、果园、森林等自然景观。'
+            },
+            {
+                id: 2,
+                name: '阴那山风景区',
+                type: 'nature',
+                position: { x: 60, y: 30 },
+                address: '梅州市梅县区雁洋镇',
+                hours: '06:00-18:00',
+                ticket: '¥25/人',
+                description: '梅州著名的自然风景区，以其秀丽的自然风光和深厚的文化底蕴而闻名。'
+            },
+            {
+                id: 3,
+                name: '灵光寺',
+                type: 'culture',
+                position: { x: 45, y: 35 },
+                address: '梅州市梅县区雁洋镇阴那村',
+                hours: '08:00-17:30',
+                ticket: '¥40/人',
+                description: '始建于唐代的古刹，是梅州重要的佛教圣地，寺内保存有众多珍贵的文物古迹。'
+            },
+            {
+                id: 4,
+                name: '叶剑英纪念园',
+                type: 'culture',
+                position: { x: 25, y: 50 },
+                address: '梅州市梅县区雁洋镇虎形村',
+                hours: '09:00-17:00（周一闭馆）',
+                ticket: '免费',
+                description: '为纪念叶剑英元帅而建的纪念园，展示了叶剑英元帅的生平事迹和革命历程。'
+            },
+            {
+                id: 5,
+                name: '客天下旅游产业园',
+                type: 'leisure',
+                position: { x: 20, y: 35 },
+                address: '梅州市梅江区三角镇东升村',
+                hours: '08:00-22:00',
+                ticket: '¥90/人',
+                description: '以客家文化为主题的综合旅游度假区，集旅游、休闲、娱乐、度假于一体。'
+            }
+        ];
+        
+        // 存储景点数据，供后续使用
+        window.mapAttractionsData = attractions;
+        
+        // 创建地图标记
+        attractions.forEach(attraction => {
+            const marker = document.createElement('div');
+            marker.className = 'map-marker';
+            marker.dataset.id = attraction.id;
+            marker.dataset.type = attraction.type;
+            
+            // 设置标记样式
+            marker.style.position = 'absolute';
+            marker.style.left = `${attraction.position.x}%`;
+            marker.style.top = `${attraction.position.y}%`;
+            marker.style.transform = 'translate(-50%, -50%)';
+            marker.style.width = '30px';
+            marker.style.height = '30px';
+            marker.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+            marker.style.border = '2px solid white';
+            marker.style.borderRadius = '50%';
+            marker.style.cursor = 'pointer';
+            marker.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.2)';
+            marker.style.transition = 'all 0.3s ease';
+            marker.style.zIndex = '10';
+            
+            // 添加脉冲动画效果
+            const pulse = document.createElement('div');
+            pulse.className = 'map-marker-pulse';
+            pulse.style.position = 'absolute';
+            pulse.style.left = '-10px';
+            pulse.style.top = '-10px';
+            pulse.style.width = '50px';
+            pulse.style.height = '50px';
+            pulse.style.background = 'rgba(102, 126, 234, 0.4)';
+            pulse.style.borderRadius = '50%';
+            pulse.style.animation = 'pulse 2s infinite';
+            marker.appendChild(pulse);
+            
+            // 添加标记点击事件
+            marker.addEventListener('click', function() {
+                showAttractionPopup(attraction);
+                
+                // 高亮对应景点列表项
+                highlightAttractionItem(attraction.id);
+            });
+            
+            // 添加标记悬停效果
+            marker.addEventListener('mouseenter', function() {
+                this.style.transform = 'translate(-50%, -50%) scale(1.2)';
+                this.style.zIndex = '20';
+            });
+            
+            marker.addEventListener('mouseleave', function() {
+                this.style.transform = 'translate(-50%, -50%) scale(1)';
+                this.style.zIndex = '10';
+            });
+            
+            // 添加到地图视图
+            mapView.appendChild(marker);
+        });
+        
+        // 添加脉冲动画样式
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = `
+            @keyframes pulse {
+                0% {
+                    transform: scale(0.5);
+                    opacity: 1;
+                }
+                100% {
+                    transform: scale(1.5);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(styleSheet);
+    }
+    
+    /**
+     * 绑定景点列表事件
+     */
+    function bindAttractionList() {
+        const attractionItems = document.querySelectorAll('.attraction-item');
+        
+        attractionItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const attractionId = parseInt(this.dataset.id);
+                
+                // 高亮当前项
+                highlightAttractionItem(attractionId);
+                
+                // 显示对应景点的弹窗
+                const attraction = window.mapAttractionsData.find(a => a.id === attractionId);
+                if (attraction) {
+                    showAttractionPopup(attraction);
+                    
+                    // 模拟地图中心移动到标记位置
+                    centerMapOnMarker(attractionId);
+                }
+            });
+        });
+    }
+    
+    /**
+     * 高亮景点列表项
+     * @param {number} attractionId - 景点ID
+     */
+    function highlightAttractionItem(attractionId) {
+        const attractionItems = document.querySelectorAll('.attraction-item');
+        
+        attractionItems.forEach(item => {
+            if (parseInt(item.dataset.id) === attractionId) {
+                item.classList.add('selected');
+            } else {
+                item.classList.remove('selected');
+            }
+        });
+    }
+    
+    /**
+     * 显示景点弹窗
+     * @param {Object} attraction - 景点数据
+     */
+    function showAttractionPopup(attraction) {
+        const popup = document.getElementById('mapPopup');
+        const popupTitle = popup.querySelector('.map-popup-title');
+        const popupImage = popup.querySelector('.map-popup-image');
+        const popupDescription = popup.querySelector('.map-popup-description');
+        const popupInfoItems = popup.querySelectorAll('.popup-info-item span');
+        
+        // 更新弹窗内容
+        popupTitle.textContent = attraction.name;
+        popupImage.src = `https://picsum.photos/seed/${attraction.id}/400/300`;
+        popupImage.alt = attraction.name;
+        popupDescription.textContent = attraction.description;
+        
+        // 更新信息项
+        if (popupInfoItems.length >= 3) {
+            popupInfoItems[0].textContent = attraction.address;
+            popupInfoItems[1].textContent = attraction.hours;
+            popupInfoItems[2].textContent = attraction.ticket;
+        }
+        
+        // 显示弹窗
+        popup.classList.add('show');
+        popup.style.opacity = '0';
+        popup.style.transition = 'opacity 0.3s ease';
+        
+        setTimeout(() => {
+            popup.style.opacity = '1';
+        }, 10);
+        
+        // 添加点击获取路线按钮事件
+        const routeBtn = popup.querySelector('.map-popup-route-btn');
+        routeBtn.onclick = function() {
+            console.log(`获取到${attraction.name}的路线`);
+            showToast(`正在规划到${attraction.name}的路线...`);
+        };
+    }
+    
+    /**
+     * 绑定弹窗关闭事件
+     */
+    function bindPopupClose() {
+        const popup = document.getElementById('mapPopup');
+        const closeBtn = popup.querySelector('.map-popup-close');
+        
+        // 关闭按钮点击事件
+        closeBtn.addEventListener('click', function() {
+            hidePopup();
+        });
+        
+        // 点击弹窗外部关闭弹窗
+        popup.addEventListener('click', function(e) {
+            if (e.target === popup) {
+                hidePopup();
+            }
+        });
+        
+        // ESC键关闭弹窗
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && popup.classList.contains('show')) {
+                hidePopup();
+            }
+        });
+        
+        /**
+         * 隐藏弹窗
+         */
+        function hidePopup() {
+            popup.style.opacity = '0';
+            
+            setTimeout(() => {
+                popup.classList.remove('show');
+                
+                // 取消高亮景点列表项
+                const attractionItems = document.querySelectorAll('.attraction-item');
+                attractionItems.forEach(item => {
+                    item.classList.remove('selected');
+                });
+            }, 300);
+        }
+    }
+    
+    /**
+     * 绑定过滤器事件
+     */
+    function bindFilterOptions() {
+        const filterCheckboxes = document.querySelectorAll('input[name="attraction-type"]');
+        
+        filterCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                filterMapMarkers();
+            });
+        });
+        
+        /**
+         * 根据选中的过滤器过滤地图标记
+         */
+        function filterMapMarkers() {
+            const selectedTypes = Array.from(filterCheckboxes)
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => checkbox.value);
+            
+            const markers = document.querySelectorAll('.map-marker');
+            
+            markers.forEach(marker => {
+                if (selectedTypes.includes(marker.dataset.type)) {
+                    marker.style.display = 'block';
+                } else {
+                    marker.style.display = 'none';
+                }
+            });
+        }
+    }
+    
+    /**
+     * 模拟地图中心移动到标记位置
+     * @param {number} attractionId - 景点ID
+     */
+    function centerMapOnMarker(attractionId) {
+        const marker = document.querySelector(`.map-marker[data-id="${attractionId}"]`);
+        const mapView = document.getElementById('mapView');
+        
+        if (marker) {
+            // 在实际地图API中，这里应该使用地图的panTo方法
+            console.log(`地图中心移动到景点ID: ${attractionId}`);
+            
+            // 添加一个简单的动画效果模拟地图移动
+            marker.style.boxShadow = '0 0 0 5px rgba(102, 126, 234, 0.5)';
+            
+            setTimeout(() => {
+                marker.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.2)';
+            }, 1000);
+        }
+    }
+    
+    /**
+     * 显示提示消息
+     * @param {string} message - 提示消息内容
+     */
+    function showToast(message) {
+        // 检查是否已存在toast元素
+        let toast = document.querySelector('.map-toast');
+        
+        if (!toast) {
+            // 创建新的toast元素
+            toast = document.createElement('div');
+            toast.className = 'map-toast';
+            document.body.appendChild(toast);
+            
+            // 添加toast样式
+            toast.style.position = 'fixed';
+            toast.style.top = '20px';
+            toast.style.right = '20px';
+            toast.style.background = 'rgba(0, 0, 0, 0.7)';
+            toast.style.color = 'white';
+            toast.style.padding = '10px 15px';
+            toast.style.borderRadius = '5px';
+            toast.style.zIndex = '9999';
+            toast.style.opacity = '0';
+            toast.style.transition = 'opacity 0.3s ease';
+        }
+        
+        // 设置消息内容
+        toast.textContent = message;
+        
+        // 显示toast
+        toast.style.opacity = '1';
+        
+        // 3秒后隐藏toast
+        setTimeout(() => {
+            toast.style.opacity = '0';
+        }, 3000);
+    }
+</script>

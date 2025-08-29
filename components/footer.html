@@ -1,0 +1,230 @@
+<!-- 网站页脚组件 -->
+<footer class="site-footer">
+    <div class="footer-container">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <h3>开始你的旅行吧！</h3>
+                <p>探索世界各地的美景，记录难忘的旅行记忆</p>
+            </div>
+            
+            <div class="footer-links">
+                <h4>快速链接</h4>
+                <ul>
+                    <li><a href="/index.html">首页</a></li>
+                    <li><a href="#destinations">目的地</a></li>
+                    <li><a href="#travel-tips">旅行小贴士</a></li>
+                    <li><a href="#about">关于我们</a></li>
+                    <li><a href="#contact">联系方式</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-contact">
+                <h4>联系我们</h4>
+                <p>邮箱：contact@travelexplorer.com</p>
+                <p>电话：+86 123 4567 8910</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">微信</a>
+                    <a href="#" class="social-link">微博</a>
+                    <a href="#" class="social-link">抖音</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; <span class="current-year">2025</span> 旅行探索者. 保留所有权利.</p>
+        </div>
+    </div>
+</footer>
+
+<style scoped>
+    /* 页脚组件样式 */
+    .site-footer {
+        background-color: #333;
+        color: white;
+        padding: 3rem 0 1.5rem;
+        margin-top: 2rem;
+    }
+    
+    .footer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+    
+    .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+    
+    .footer-logo h3 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        color: white;
+    }
+    
+    .footer-logo p {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+    
+    .footer-links h4,
+    .footer-contact h4 {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+        color: white;
+        position: relative;
+        padding-bottom: 0.5rem;
+    }
+    
+    .footer-links h4::after,
+    .footer-contact h4::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 40px;
+        height: 2px;
+        background-color: #667eea;
+    }
+    
+    .footer-links ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .footer-links li {
+        margin-bottom: 0.5rem;
+    }
+    
+    .footer-links a {
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        transition: color 0.3s ease;
+        display: inline-block;
+        position: relative;
+        padding-left: 15px;
+    }
+    
+    .footer-links a::before {
+        content: '→';
+        position: absolute;
+        left: 0;
+        transition: transform 0.3s ease;
+    }
+    
+    .footer-links a:hover {
+        color: #667eea;
+        transform: translateX(5px);
+    }
+    
+    .footer-links a:hover::before {
+        transform: translateX(5px);
+    }
+    
+    .footer-contact p {
+        color: rgba(255, 255, 255, 0.7);
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+    }
+    
+    .social-links {
+        display: flex;
+        gap: 10px;
+        margin-top: 1rem;
+    }
+    
+    .social-link {
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        padding: 5px 10px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 5px;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+    }
+    
+    .social-link:hover {
+        background-color: #667eea;
+        color: white;
+        border-color: #667eea;
+    }
+    
+    .footer-bottom {
+        text-align: center;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .footer-bottom p {
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 0.85rem;
+        margin: 0;
+    }
+    
+    /* 响应式设计 */
+    @media (max-width: 767px) {
+        .site-footer {
+            padding: 2rem 0 1rem;
+        }
+        
+        .footer-content {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        
+        .footer-logo h3 {
+            font-size: 1.3rem;
+        }
+        
+        .footer-links h4,
+        .footer-contact h4 {
+            font-size: 1rem;
+        }
+        
+        .social-links {
+            justify-content: center;
+        }
+    }
+</style>
+
+<script>
+    // 页脚组件JavaScript功能
+    document.addEventListener('DOMContentLoaded', function() {
+        // 设置当前年份
+        updateCurrentYear();
+        
+        // 为页脚链接添加动画效果
+        initFooterLinksAnimation();
+    });
+    
+    /**
+     * 更新当前年份
+     */
+    function updateCurrentYear() {
+        const yearElement = document.querySelector('.current-year');
+        if (yearElement) {
+            yearElement.textContent = new Date().getFullYear();
+        }
+    }
+    
+    /**
+     * 初始化页脚链接动画效果
+     */
+    function initFooterLinksAnimation() {
+        const footerLinks = document.querySelectorAll('.footer-links a, .social-link');
+        
+        footerLinks.forEach(link => {
+            link.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px)';
+            });
+            
+            link.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    }
+</script>

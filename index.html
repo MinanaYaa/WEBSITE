@@ -1,100 +1,21 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <title>旅游网页</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="style.css">
-  <style>
-    body {
-      font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f4f6fa;
-      color: #222;
-    }
-    header {
-      background: #2196f3;
-      color: #fff;
-      padding: 24px 0 16px 0;
-      text-align: center;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 8px rgba(33,150,243,0.1);
-    }
-    header h1 {
-      margin: 0 0 8px 0;
-      font-size: 2.4em;
-      letter-spacing: 2px;
-    }
-    nav {
-      margin: 0 auto;
-      display: inline-block;
-    }
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
-      margin: 0 22px;
-      font-size: 1.1em;
-      transition: color 0.2s;
-    }
-    nav a:hover {
-      color: #ffe082;
-      text-decoration: underline;
-    }
-    main {
-      max-width: 740px;
-      margin: 0 auto;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 16px rgba(33,150,243,0.07);
-      padding: 32px 24px 24px 24px;
-      margin-bottom: 32px;
-    }
-    section {
-      margin-bottom: 32px;
-    }
-    h2 {
-      color: #2196f3;
-      margin-bottom: 18px;
-    }
-    ul {
-      padding-left: 18px;
-    }
-    .route-link {
-      display: inline-block;
-      padding: 6px 16px;        /* 调小内边距 */
-      background: #4caf50;
-      color: #fff;
-      border-radius: 6px;
-      text-decoration: none;
-      font-size: 0.95em;        /* 调小字体 */
-      font-weight: bold;
-      margin: 10px 0;
-      transition: background 0.2s;
-      box-shadow: 0 1px 8px rgba(76,175,80,0.09);
-    }
-    .route-link:hover {
-      background: #388e3c;
-    }
-    footer {
-      text-align: center;
-      padding: 18px 0;
-      background: #e3f2fd;
-      color: #444;
-      font-size: 1em;
-      letter-spacing: 1px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>旅游网站</title>
+    <!-- 引入公共CSS文件 -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <!-- 引入Font Awesome图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-  <header>
-    <h1>欢迎来到 Zane 的旅游网页！</h1>
-    <nav>
-      <a href="#destinations">已出行地址</a>
-      <a href="#tips">出行指南</a>
-    </nav>
-  </header>
+    <!-- 加载头部组件 -->
+    <div id="header-container"></div>
+    
+    <!-- 加载导航栏组件 -->
+    <div id="navigation-container"></div>
   <main>
     <section id="destinations">
       <h2>已出行地址</h2>
@@ -105,7 +26,7 @@
         <li>梅州</li>
         <!-- 可继续补充 -->
       </ul>
-      <a class="route-link" href="mzTravel.html">梅州旅游路线</a>
+      <a class="route-link" href="WEBSITE/destinations/meizhou/mzTravel.html">梅州旅游路线</a>
     </section>
     <section id="tips">
       <h2>出行指南</h2>
@@ -117,8 +38,52 @@
       </ul>
     </section>
   </main>
-  <footer>
-    <p>&copy; Zane的旅游网页 | 2025</p>
-  </footer>
+    <!-- 加载页脚组件 -->
+    <div id="footer-container"></div>
+    
+    <!-- 引入公共JavaScript文件 -->
+    <script src="assets/js/main.js"></script>
+    
+    <!-- 加载组件的JavaScript -->
+    <script>
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('页面加载完成，开始加载组件');
+            
+            // 加载头部组件
+            fetch('components/header.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('header-container').innerHTML = data;
+                })
+                .catch(error => {
+                    console.error('加载头部组件失败:', error);
+                    document.getElementById('header-container').innerHTML = '<header><h1>旅游网站</h1><p>探索世界的每一个角落</p></header>';
+                });
+            
+            // 加载导航栏组件
+            fetch('components/navigation.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('navigation-container').innerHTML = data;
+                })
+                .catch(error => {
+                    console.error('加载导航栏组件失败:', error);
+                    document.getElementById('navigation-container').innerHTML = '<nav><ul><li><a href="#">首页</a></li><li><a href="#destinations">目的地</a></li><li><a href="#tips">旅行贴士</a></li></ul></nav>';
+                });
+            
+            // 加载页脚组件
+            fetch('components/footer.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('footer-container').innerHTML = data;
+                })
+                .catch(error => {
+                    console.error('加载页脚组件失败:', error);
+                    document.getElementById('footer-container').innerHTML = '<footer><p>&copy; 2023 旅游网站 版权所有</p></footer>';
+                });
+        });
+    </script>
 </body>
+
 </html>
