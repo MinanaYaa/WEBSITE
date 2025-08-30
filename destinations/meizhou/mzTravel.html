@@ -162,15 +162,109 @@
             </div>
         </section>
 
-        <!-- 天气状况 -->
+        <!-- 加载旅游数据处理模块 -->
+        <script src="../../assets/js/travel-data.js"></script>
+        <!-- 加载测试脚本（可选） -->
+        <script src="../../assets/js/test-travel-data.js"></script>
+
+        <!-- 天气状况区域 -->
         <section id="weather" class="mb-12">
             <div id="weather-widget-container"></div>
             <script>
-                fetch('../../components/weather-widget.html')
-                    .then(response => response.text())
-                    .then(data => {
-                        document.getElementById('weather-widget-container').innerHTML = data;
-                    });
+                // 加载天气组件并初始化
+                document.addEventListener('DOMContentLoaded', function () {
+                    // 加载天气组件HTML
+                    fetch('../../components/weather-widget.html')
+                        .then(response => response.text())
+                        .then(data => {
+                            const container = document.getElementById('weather-widget-container');
+                            container.innerHTML = data;
+
+                            // 加载外部天气脚本
+                            function loadWeatherScript() {
+                                return new Promise((resolve, reject) => {
+                                    const script = document.createElement('script');
+                                    script.src = '../../assets/js/weather-widget.js';
+                                    script.onload = () => resolve();
+                                    script.onerror = () => reject(new Error('天气脚本加载失败'));
+                                    document.body.appendChild(script);
+                                });
+                            }
+
+                            // 等待TravelData模块加载
+                            function waitForTravelData(maxAttempts = 10, delay = 500) {
+                                return new Promise((resolve, reject) => {
+                                    let attempts = 0;
+                                    const interval = setInterval(() => {
+                                        attempts++;
+                                        if (window.TravelData && typeof window.TravelData.getCurrentLocation === 'function') {
+                                            clearInterval(interval);
+                                            resolve(window.TravelData);
+                                        } else if (attempts >= maxAttempts) {
+                                            clearInterval(interval);
+                                            reject(new Error('TravelData模块加载超时'));
+                                        }
+                                    }, delay);
+                                });
+                            }
+
+                            // 执行天气组件初始化流程
+                            async function initWeatherComponent() {
+                                try {
+                                    // 加载天气脚本
+                                    await loadWeatherScript();
+
+                                    // 尝试获取TravelData模块和位置信息
+                                    let location = { latitude: 24.29, longitude: 116.12 }; // 默认位置：梅州市中心
+
+                                    try {
+                                        const travelData = await waitForTravelData();
+                                        const userLocation = travelData.getCurrentLocation();
+                                        if (userLocation && userLocation.latitude && userLocation.longitude) {
+                                            location = userLocation;
+                                            console.log('使用TravelData提供的位置信息:', location);
+                                        } else {
+                                            console.log('TravelData未提供有效位置信息，使用默认位置');
+                                        }
+                                    } catch (error) {
+                                        console.log('无法获取TravelData模块，使用默认位置:', error.message);
+                                    }
+
+                                    // 等待WeatherWidget模块加载完成并初始化
+                                    const widgetInitInterval = setInterval(() => {
+                                        if (window.WeatherWidget && typeof window.WeatherWidget.init === 'function') {
+                                            clearInterval(widgetInitInterval);
+                                            window.WeatherWidget.init(location.latitude, location.longitude);
+                                            console.log('天气组件初始化完成');
+                                        }
+                                    }, 300);
+
+                                    // 设置初始化超时
+                                    setTimeout(() => {
+                                        clearInterval(widgetInitInterval);
+                                        console.log('天气组件初始化流程已启动');
+                                    }, 5000);
+
+                                } catch (error) {
+                                    console.error('天气组件初始化失败:', error);
+                                    container.innerHTML =
+                                        '<div class="bg-white p-4 rounded-lg shadow-md">\n' +
+                                        '  <p class="text-red-500">天气信息加载失败，请稍后刷新页面重试。</p>\n' +
+                                        '</div>';
+                                }
+                            }
+
+                            // 启动初始化流程
+                            initWeatherComponent();
+                        })
+                        .catch(error => {
+                            console.error('加载天气组件HTML失败:', error);
+                            document.getElementById('weather-widget-container').innerHTML =
+                                '<div class="bg-white p-4 rounded-lg shadow-md">\n' +
+                                '  <p class="text-red-500">天气信息加载失败，请稍后刷新页面重试。</p>\n' +
+                                '</div>';
+                        });
+                });
             </script>
         </section>
 
@@ -722,11 +816,7 @@
         });
     </script>
 
-    <!-- 旅游数据处理模块 -->
-    <script src="../../assets/js/travel-data.js"></script>
 
-    <!-- 测试脚本（可选） -->
-    <script src="../../assets/js/test-travel-data.js"></script>
 
     <!-- 加载页脚 -->
     <script>
