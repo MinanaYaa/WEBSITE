@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>旅游网站</title>
-    <!-- 引入公共CSS文件 -->
-    <link rel="stylesheet" href="assets/css/main.css">
-    <link rel="stylesheet" href="assets/css/responsive.css">
-    <!-- 引入Font Awesome图标库 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zane的旅游网站</title>
+  <!-- 引入公共CSS文件 -->
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <!-- 引入Font Awesome图标库 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+
 <body>
-    <!-- 加载头部组件 -->
-    <div id="header-container"></div>
-    
-    <!-- 加载导航栏组件 -->
-    <div id="navigation-container"></div>
+  <!-- 加载头部组件 -->
+  <div id="header-container"></div>
+
+  <!-- 加载导航栏组件 -->
+  <div id="navigation-container"></div>
   <main>
     <section id="destinations">
       <h2>已出行地址</h2>
@@ -26,7 +28,7 @@
         <li>梅州</li>
         <!-- 可继续补充 -->
       </ul>
-      <a class="route-link" href="WEBSITE/destinations/meizhou/mzTravel.html">梅州旅游路线</a>
+      <a class="route-link" href="destinations/meizhou/mzTravel.html">梅州旅游路线</a>
     </section>
     <section id="tips">
       <h2>出行指南</h2>
@@ -38,52 +40,52 @@
       </ul>
     </section>
   </main>
-    <!-- 加载页脚组件 -->
-    <div id="footer-container"></div>
-    
-    <!-- 引入公共JavaScript文件 -->
-    <script src="assets/js/main.js"></script>
-    
-    <!-- 加载组件的JavaScript -->
-    <script>
-        // 页面加载完成后执行
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('页面加载完成，开始加载组件');
-            
-            // 加载头部组件
-            fetch('components/header.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('header-container').innerHTML = data;
-                })
-                .catch(error => {
-                    console.error('加载头部组件失败:', error);
-                    document.getElementById('header-container').innerHTML = '<header><h1>旅游网站</h1><p>探索世界的每一个角落</p></header>';
-                });
-            
-            // 加载导航栏组件
-            fetch('components/navigation.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('navigation-container').innerHTML = data;
-                })
-                .catch(error => {
-                    console.error('加载导航栏组件失败:', error);
-                    document.getElementById('navigation-container').innerHTML = '<nav><ul><li><a href="#">首页</a></li><li><a href="#destinations">目的地</a></li><li><a href="#tips">旅行贴士</a></li></ul></nav>';
-                });
-            
-            // 加载页脚组件
-            fetch('components/footer.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('footer-container').innerHTML = data;
-                })
-                .catch(error => {
-                    console.error('加载页脚组件失败:', error);
-                    document.getElementById('footer-container').innerHTML = '<footer><p>&copy; 2023 旅游网站 版权所有</p></footer>';
-                });
+  <!-- 加载页脚组件 -->
+  <div id="footer-container"></div>
+
+  <!-- 引入公共JavaScript文件 -->
+  <script src="assets/js/main.js"></script>
+
+  <!-- 加载组件的JavaScript -->
+  <script>
+    // 页面加载完成后执行
+    document.addEventListener('DOMContentLoaded', function () {
+      console.log('页面加载完成，开始加载组件');
+
+      // 加载头部组件
+      fetch('components/header.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('header-container').innerHTML = data;
+        })
+        .catch(error => {
+          console.error('加载头部组件失败:', error);
+          document.getElementById('header-container').innerHTML = '<header><h1>旅游网站</h1><p>探索世界的每一个角落</p></header>';
         });
-    </script>
+
+      // 加载导航栏组件
+      fetch('components/navigation.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('navigation-container').innerHTML = data;
+        })
+        .catch(error => {
+          console.error('加载导航栏组件失败:', error);
+          document.getElementById('navigation-container').innerHTML = '<nav><ul><li><a href="#">首页</a></li><li><a href="#destinations">目的地</a></li><li><a href="#tips">旅行贴士</a></li></ul></nav>';
+        });
+
+      // 加载页脚组件
+      fetch('components/footer.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('footer-container').innerHTML = data;
+        })
+        .catch(error => {
+          console.error('加载页脚组件失败:', error);
+          document.getElementById('footer-container').innerHTML = '<footer><p>&copy; 2023 旅游网站 版权所有</p></footer>';
+        });
+    });
+  </script>
 </body>
 
 </html>

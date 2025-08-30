@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>梅州两天一晚旅行攻略</title>
+    <title data-travel-destination="meizhou">梅州两天一晚旅行攻略</title>
     <!-- 引入Font Awesome图标库 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
@@ -13,7 +13,8 @@
     <link rel="stylesheet" href="../../assets/css/responsive.css">
 
     <!-- 引入高德地图API -->
-    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=93336cce45884cdac08371812275ede4"></script>
+    <script type="text/javascript"
+        src="https://webapi.amap.com/maps?v=1.4.15&key=93336cce45884cdac08371812275ede4"></script>
 
     <!-- 引入公共JS文件 -->
     <script src="../../assets/js/main.js"></script>
@@ -21,6 +22,11 @@
 
     <!-- 页面特定样式 -->
     <style>
+        /* 隐藏子网页中的header */
+        header.site-header {
+            display: none;
+        }
+
         /* 行程安排样式 */
         .itinerary-day {
             margin-bottom: 30px;
@@ -29,20 +35,20 @@
             border-radius: 10px;
             background-color: #fafafa;
         }
-        
+
         .itinerary-day h3 {
             color: #667eea;
             margin-bottom: 15px;
             padding-bottom: 10px;
             border-bottom: 2px solid #667eea;
         }
-        
+
         .itinerary-item {
             margin-bottom: 15px;
             padding-left: 25px;
             position: relative;
         }
-        
+
         .itinerary-item:before {
             content: '•';
             color: #667eea;
@@ -51,13 +57,13 @@
             left: 0;
             top: -5px;
         }
-        
+
         .itinerary-time {
             font-weight: bold;
             color: #333;
             margin-right: 10px;
         }
-        
+
         /* 景点卡片样式 */
         .attractions-container {
             display: grid;
@@ -65,7 +71,7 @@
             gap: 20px;
             margin-top: 20px;
         }
-        
+
         .attraction-card {
             border: 1px solid #e0e0e0;
             border-radius: 8px;
@@ -73,38 +79,38 @@
             transition: all 0.3s ease;
             background-color: white;
         }
-        
+
         .attraction-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
-        
+
         .attraction-card img {
             width: 100%;
             height: 200px;
             object-fit: cover;
         }
-        
+
         .attraction-info {
             padding: 15px;
         }
-        
+
         .attraction-info h3 {
             margin-bottom: 10px;
             color: #333;
         }
-        
+
         .attraction-rating {
             color: #ffc107;
             margin-bottom: 10px;
         }
-        
+
         .attraction-meta {
             color: #666;
             font-size: 0.9rem;
             margin-bottom: 15px;
         }
-        
+
         /* 地图容器样式 */
         #mapContainer {
             width: 100%;
@@ -112,25 +118,25 @@
             border-radius: 8px;
             overflow: hidden;
         }
-        
+
         /* 模态框样式 */
         #attractionModal {
             z-index: 1000;
         }
-        
+
         /* 景点详情内容样式 */
         #modalContent img {
             max-width: 100%;
             height: auto;
             border-radius: 8px;
         }
-        
+
         #modalContent h4 {
             color: #667eea;
             margin-top: 20px;
             margin-bottom: 10px;
         }
-        
+
         #modalContent p {
             margin-bottom: 15px;
             line-height: 1.6;
@@ -141,48 +147,31 @@
 <body>
     <!-- 头部容器 -->
     <div id="header-container"></div>
-    
+
     <!-- 导航栏容器 -->
     <div id="navigation-container"></div>
 
     <main>
         <!-- 封面图 -->
-        <section class="relative h-64 md:h-96 rounded-lg overflow-hidden mb-10">
-            <img src="https://cdn.jsdelivr.net/gh/13071558875/Photo/Photo/202508240846988.png" alt="梅州风景"
-                class="w-full h-full object-cover">
+        <section class="relative h-64 md:h-96 rounded-lg overflow-hidden mb-10 bg-gray-100">
             <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
                 <div class="p-6 text-white">
-                    <h2 class="text-3xl md:text-4xl font-bold mb-2">梅州两天一晚精华游</h2>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-2">梅州两天一晚旅游</h2>
                     <p class="text-lg opacity-90">探索客家文化，欣赏自然美景</p>
                 </div>
             </div>
         </section>
 
         <!-- 天气状况 -->
-        <section id="weather" class="mb-12 bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-2xl font-bold mb-4 flex items-center text-blue-600">
-                <i class="fa fa-sun-o mr-2"></i>天气状况
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4" id="weatherInfo">
-                <div class="bg-blue-50 p-4 rounded-lg text-center">
-                    <p class="text-sm text-gray-500">日期</p>
-                    <p class="text-xl font-bold">2025年8月25-26日</p>
-                </div>
-                <div class="bg-blue-50 p-4 rounded-lg text-center">
-                    <p class="text-sm text-gray-500">温度</p>
-                    <p class="text-xl font-bold">35-37°C</p>
-                </div>
-                <div class="bg-blue-50 p-4 rounded-lg text-center">
-                    <p class="text-sm text-gray-500">天气</p>
-                    <p class="text-xl font-bold">多云</p>
-                </div>
-                <div class="bg-blue-50 p-4 rounded-lg text-center">
-                    <p class="text-sm text-gray-500">风力</p>
-                    <p class="text-xl font-bold">小于3级</p>
-                </div>
-            </div>
-            <p class="mt-4 text-gray-600"><i class="fa fa-info-circle text-blue-500 mr-1"></i> 天气炎热，建议做好防晒措施，携带足够的饮用水。
-            </p>
+        <section id="weather" class="mb-12">
+            <div id="weather-widget-container"></div>
+            <script>
+                fetch('../../components/weather-widget.html')
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('weather-widget-container').innerHTML = data;
+                    });
+            </script>
         </section>
 
         <!-- 行程概览 -->
@@ -310,106 +299,176 @@
             <h2 class="text-2xl font-bold mb-6 flex items-center text-blue-600">
                 <i class="fa fa-map-marker mr-2"></i>景点介绍
             </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="attractions-container">
                 <!-- 龙归寨瀑布 -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover">
-                    <div class="h-48 overflow-hidden">
-                        <img src="https://cdn.jsdelivr.net/gh/13071558875/Photo/Photo/202508240849703.png" alt="龙归寨瀑布"
-                            class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                <div class="attraction-card">
+                    <div class="attraction-image-container">
+                        <img class="attraction-image"
+                            src="https://cdn.jsdelivr.net/gh/13071558875/Photo/Photo/202508240849703.png" alt="龙归寨瀑布">
+                        <div class="attraction-rating">
+                            <span class="rating-stars">★★★</span>
+                            <span class="rating-score">3.0</span>
+                        </div>
+                        <div class="attraction-tag">
+                            <span>3A景区</span>
+                        </div>
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-blue-600">龙归寨瀑布</h3>
-                        <div class="flex items-center text-yellow-500 mb-3">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <span class="text-gray-600 ml-1">3A景区</span>
+                    <div class="attraction-content">
+                        <h3 class="attraction-title">龙归寨瀑布</h3>
+                        <div class="attraction-meta">
+                            <div class="attraction-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>梅州市丰顺县汤坑镇</span>
+                            </div>
+                            <div class="attraction-category">
+                                <span>自然景观</span>
+                            </div>
                         </div>
-                        <p class="text-gray-600 mb-4">龙归寨瀑布是粤东最大的瀑布，位于梅州市丰顺县汤坑镇，落差约125米，宽约62米，被誉为"粤东第一瀑"。</p>
-                        <div class="flex justify-between text-sm text-gray-500 mb-4">
-                            <span><i class="fa fa-clock-o mr-1"></i> 开放时间: 08:00-18:00</span>
-                            <span><i class="fa fa-ticket mr-1"></i> 门票: 48元</span>
+                        <p class="attraction-description">
+                            龙归寨瀑布是粤东最大的瀑布，落差约125米，宽约62米，被誉为"粤东第一瀑"。
+                        </p>
+                        <div class="attraction-info">
+                            <div class="info-item">
+                                <i class="fas fa-clock"></i>
+                                <span>开放时间: 08:00-18:00</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-ticket-alt"></i>
+                                <span>门票: ¥48/人</span>
+                            </div>
                         </div>
-                        <button
-                            class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors attraction-detail"
-                            data-id="1">查看详情</button>
+                        <div class="attraction-actions">
+                            <button class="attraction-detail-btn">查看详情</button>
+                        </div>
                     </div>
                 </div>
 
                 <!-- 千佛塔 -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover">
-                    <div class="h-48 overflow-hidden">
-                        <img src="https://cdn.jsdelivr.net/gh/13071558875/Photo/Photo/202508240850009.png" alt="千佛塔"
-                            class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                <div class="attraction-card">
+                    <div class="attraction-image-container">
+                        <img class="attraction-image"
+                            src="https://cdn.jsdelivr.net/gh/13071558875/Photo/Photo/202508240850009.png" alt="千佛塔">
+                        <div class="attraction-rating">
+                            <span class="rating-stars">★★★★</span>
+                            <span class="rating-score">4.0</span>
+                        </div>
+                        <div class="attraction-tag">
+                            <span>宗教圣地</span>
+                        </div>
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-blue-600">千佛塔</h3>
-                        <div class="flex items-center text-yellow-500 mb-3">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <span class="text-gray-600 ml-1">宗教圣地</span>
+                    <div class="attraction-content">
+                        <h3 class="attraction-title">千佛塔</h3>
+                        <div class="attraction-meta">
+                            <div class="attraction-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>梅州市梅江区</span>
+                            </div>
+                            <div class="attraction-category">
+                                <span>历史古迹</span>
+                            </div>
                         </div>
-                        <p class="text-gray-600 mb-4">千佛塔是梅州市著名的佛教圣地，位于梅州市梅江区，塔内供奉着千尊佛像，历史悠久，建筑精美。</p>
-                        <div class="flex justify-between text-sm text-gray-500 mb-4">
-                            <span><i class="fa fa-clock-o mr-1"></i> 开放时间: 08:00-17:30</span>
-                            <span><i class="fa fa-ticket mr-1"></i> 门票: 10元</span>
+                        <p class="attraction-description">
+                            千佛塔是梅州市著名的佛教圣地，塔内供奉着千尊佛像，历史悠久，建筑精美。
+                        </p>
+                        <div class="attraction-info">
+                            <div class="info-item">
+                                <i class="fas fa-clock"></i>
+                                <span>开放时间: 08:00-17:30</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-ticket-alt"></i>
+                                <span>门票: ¥10/人</span>
+                            </div>
                         </div>
-                        <button
-                            class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors attraction-detail"
-                            data-id="2">查看详情</button>
+                        <div class="attraction-actions">
+                            <button class="attraction-detail-btn">查看详情</button>
+                        </div>
                     </div>
                 </div>
 
                 <!-- 客家博物馆 -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover">
-                    <div class="h-48 overflow-hidden">
-                        <img src="https://cdn.jsdelivr.net/gh/13071558875/Photo/Photo/202508240847611.png" alt="客家博物馆"
-                            class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                <div class="attraction-card">
+                    <div class="attraction-image-container">
+                        <img class="attraction-image"
+                            src="https://cdn.jsdelivr.net/gh/13071558875/Photo/Photo/202508240847611.png" alt="客家博物馆">
+                        <div class="attraction-rating">
+                            <span class="rating-stars">★★★★</span>
+                            <span class="rating-score">4.0</span>
+                        </div>
+                        <div class="attraction-tag">
+                            <span>4A景区</span>
+                        </div>
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-blue-600">客家博物馆</h3>
-                        <div class="flex items-center text-yellow-500 mb-3">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <span class="text-gray-600 ml-1">4A景区</span>
+                    <div class="attraction-content">
+                        <h3 class="attraction-title">客家博物馆</h3>
+                        <div class="attraction-meta">
+                            <div class="attraction-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>梅州市梅江区</span>
+                            </div>
+                            <div class="attraction-category">
+                                <span>文化场馆</span>
+                            </div>
                         </div>
-                        <p class="text-gray-600 mb-4">客家博物馆是了解客家文化的重要窗口，展示了客家民系的历史、文化、艺术和生活习俗。</p>
-                        <div class="flex justify-between text-sm text-gray-500 mb-4">
-                            <span><i class="fa fa-clock-o mr-1"></i> 开放时间: 09:00-17:00</span>
-                            <span><i class="fa fa-ticket mr-1"></i> 门票: 免费</span>
+                        <p class="attraction-description">
+                            客家博物馆是了解客家文化的重要窗口，展示了客家民系的历史、文化、艺术和生活习俗。
+                        </p>
+                        <div class="attraction-info">
+                            <div class="info-item">
+                                <i class="fas fa-clock"></i>
+                                <span>开放时间: 09:00-17:00</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-ticket-alt"></i>
+                                <span>门票: 免费</span>
+                            </div>
                         </div>
-                        <button
-                            class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors attraction-detail"
-                            data-id="3">查看详情</button>
+                        <div class="attraction-actions">
+                            <button class="attraction-detail-btn">查看详情</button>
+                        </div>
                     </div>
                 </div>
 
                 <!-- 北街 -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover">
-                    <div class="h-48 overflow-hidden">
-                        <img src="https://cdn.jsdelivr.net/gh/13071558875/Photo/Photo/202508240851312.png" alt="北街"
-                            class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                <div class="attraction-card">
+                    <div class="attraction-image-container">
+                        <img class="attraction-image"
+                            src="https://cdn.jsdelivr.net/gh/13071558875/Photo/Photo/202508240851312.png" alt="北街">
+                        <div class="attraction-rating">
+                            <span class="rating-stars">★★★</span>
+                            <span class="rating-score">3.0</span>
+                        </div>
+                        <div class="attraction-tag">
+                            <span>历史街区</span>
+                        </div>
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-blue-600">北街</h3>
-                        <div class="flex items-center text-yellow-500 mb-3">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <span class="text-gray-600 ml-1">历史街区</span>
+                    <div class="attraction-content">
+                        <h3 class="attraction-title">北街</h3>
+                        <div class="attraction-meta">
+                            <div class="attraction-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>梅州市梅江区</span>
+                            </div>
+                            <div class="attraction-category">
+                                <span>文化体验</span>
+                            </div>
                         </div>
-                        <p class="text-gray-600 mb-4">北街是梅州市的历史文化街区，保留了许多传统建筑，有各种特色小店和当地美食，是体验梅州市井文化的好去处。</p>
-                        <div class="flex justify-between text-sm text-gray-500 mb-4">
-                            <span><i class="fa fa-clock-o mr-1"></i> 开放时间: 全天</span>
-                            <span><i class="fa fa-ticket mr-1"></i> 门票: 免费</span>
+                        <p class="attraction-description">
+                            北街是梅州市的历史文化街区，保留了许多传统建筑，有各种特色小店和当地美食。
+                        </p>
+                        <div class="attraction-info">
+                            <div class="info-item">
+                                <i class="fas fa-clock"></i>
+                                <span>开放时间: 全天</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-ticket-alt"></i>
+                                <span>门票: 免费</span>
+                            </div>
                         </div>
-                        <button
-                            class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors attraction-detail"
-                            data-id="4">查看详情</button>
+                        <div class="attraction-actions">
+                            <button class="attraction-detail-btn">查看详情</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -464,14 +523,14 @@
         }
 
         // 加载所有组件
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             loadComponent('header-container', '../../components/header.html');
             loadComponent('navigation-container', '../../components/navigation.html');
             loadComponent('footer-container', '../../components/footer.html');
         });
 
         // 等待页面内容加载完成后执行页面特定的JavaScript
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // 景点详情模态框
             const modal = document.getElementById('attractionModal');
             const closeModal = document.getElementById('closeModal');
@@ -481,7 +540,7 @@
             // 等待导航组件加载完成后初始化景点详情功能
             setTimeout(() => {
                 document.querySelectorAll('.attraction-detail').forEach(button => {
-                    button.addEventListener('click', function() {
+                    button.addEventListener('click', function () {
                         const id = this.getAttribute('data-id');
                         let title, content;
 
@@ -560,13 +619,13 @@
 
                 // 关闭模态框功能
                 if (closeModal) {
-                    closeModal.addEventListener('click', function() {
+                    closeModal.addEventListener('click', function () {
                         modal.classList.add('hidden');
                     });
                 }
 
                 // 点击模态框外部关闭
-                modal.addEventListener('click', function(e) {
+                modal.addEventListener('click', function (e) {
                     if (e.target === modal) {
                         modal.classList.add('hidden');
                     }
@@ -574,7 +633,7 @@
             }, 500); // 延迟执行，确保组件已加载
 
             // 地图初始化 - 优化地图加载逻辑
-            window.onload = function() {
+            window.onload = function () {
                 // 初始化地图
                 if (window.TravelMap && window.TravelMap.initMap) {
                     // 确保地图容器存在
@@ -654,7 +713,7 @@
                     // 尝试重新加载地图模块
                     const mapScript = document.createElement('script');
                     mapScript.src = '../../assets/js/map.js';
-                    mapScript.onload = function() {
+                    mapScript.onload = function () {
                         console.log('地图模块重新加载成功');
                     };
                     document.head.appendChild(mapScript);
@@ -662,7 +721,36 @@
             };
         });
     </script>
-</body>
 
+    <!-- 旅游数据处理模块 -->
+    <script src="../../assets/js/travel-data.js"></script>
+
+    <!-- 测试脚本（可选） -->
+    <script src="../../assets/js/test-travel-data.js"></script>
+
+    <!-- 加载页脚 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // 加载页脚
+            fetch('../../components/footer.html')
+                .then(response => response.text())
+                .then(data => {
+                    const footerContainer = document.getElementById('footer-container');
+                    if (footerContainer) {
+                        footerContainer.innerHTML = data;
+                    }
+                })
+                .catch(error => console.error('加载页脚失败:', error));
+
+            // 等待所有组件加载完成后绑定旅游数据
+            setTimeout(function () {
+                if (window.TravelData && window.TravelData.bindToAllElements) {
+                    window.TravelData.bindToAllElements();
+                }
+            }, 1500);
+        });
+    </script>
+
+</body>
 
 </html>
