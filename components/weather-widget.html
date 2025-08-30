@@ -302,89 +302,100 @@
     <script>
         // 将所有函数放在一个立即执行的函数表达式(IIFE)中
         (function () {
-
-            // 直接初始化，因为当这个脚本执行时HTML已经被加载到父页面中了
-            initWeatherWidget();
-
+            // 等待TravelData模块加载完成
+            function waitForTravelData() {
+                return new Promise(resolve => {
+                    if (window.TravelData) {
+                        resolve(window.TravelData);
+                        return;
+                    }
+                    const interval = setInterval(() => {
+                        if (window.TravelData) {
+                            clearInterval(interval);
+                            resolve(window.TravelData);
+                        }
+                    }, 100);
+                    // 设置超时
+                    setTimeout(() => {
+                        clearInterval(interval);
+                        resolve(null);
+                    }, 3000);
+                });
+            }
 
             /**
-             * 从父页面获取城市名称
+             * 初始化天气小部件 - 优化版，使用TravelData模块
              */
-            function getCityNameFromParentPage() {
-                try {
-                    // 检查是否在iframe中
-                    if (window.parent !== window && window.parent.document) {
-                        // 优先从父页面标题的data-travel-destination属性获取目的地
-                        const parentTitleElement = window.parent.document.querySelector('title');
-                        const travelDestination = parentTitleElement?.getAttribute('data-travel-destination');
-
-                        if (travelDestination) {
-                            return travelDestination;
+            async function initWeatherWidget() {
+                // 等待TravelData模块加载
+                const travelDataModule = await waitForTravelData();
+                
+                // 获取天气小部件元素
+                const weatherWidget = document.querySelector('.weather-widget');
+                
+                if (travelDataModule && weatherWidget) {
+                    // 使用TravelData模块初始化和绑定数据
+                    travelDataModule.initialize();
+                    travelDataModule.bindToElement(weatherWidget);
+                    
+                    // 获取目的地信息
+                    const destination = travelDataModule.getDestination();
+                    const destinationName = travelDataModule.getDestinationDisplayName();
+                    
+                    // 如果有目的地信息，则获取天气数据
+                    if (destination && destination !== 'unknown') {
+                        // 更新显示的城市名称
+                        const locationNameElement = document.getElementById('current-location');
+                        if (locationNameElement) {
+                            locationNameElement.textContent = destinationName;
                         }
-
-                        // 如果没有属性，则从标题文本中提取
-                        const parentTitle = window.parent.document.title;
-
-                        // 从标题中提取城市名称（假设格式为"城市名两天一晚旅行攻略"或类似格式）
-                        const cityMatch = parentTitle.match(/^(.*?)[两天]|^(.*?)旅行/);
-                        if (cityMatch && cityMatch[1]) {
-                            return cityMatch[1];
-                        } else if (cityMatch && cityMatch[2]) {
-                            return cityMatch[2];
-                        }
+                        
+                        // 尝试从心知天气API获取天气数据
+                        fetchWeatherDataFromXinzhiAPI(destinationName);
+                    } else {
+                        console.warn('未能通过TravelData模块获取目的地信息，使用默认初始化');
+                        // 使用默认的位置显示和数据获取
+                        defaultInit();
                     }
-                    // 如果无法从父页面获取，默认返回"-"
-                    return "-";
-                } catch (error) {
-                    console.error('从父页面获取城市名称失败:', error);
-                    // 出错时返回默认值
-                    return "-";
+                } else {
+                    console.warn('TravelData模块未加载或未找到天气小部件，使用默认初始化');
+                    // 使用默认的位置显示和数据获取
+                    defaultInit();
                 }
             }
 
             /**
-             * 初始化天气小部件
+             * 默认初始化（当TravelData模块不可用时）
              */
-            function initWeatherWidget() {
-
+            function defaultInit() {
                 // 获取默认位置或用户选择的位置
                 const locationSelector = document.getElementById('weather-location');
                 let selectedLocation = locationSelector ? locationSelector.value : '';
-
-                // 尝试从父页面获取城市名称
-                const cityNameFromParent = getCityNameFromParentPage();
-                if (cityNameFromParent && cityNameFromParent !== "-") {
-                    // 如果从父页面获取到了城市名称，则使用该名称
-                    selectedLocation = cityNameFromParent;
-
-                    // 直接更新显示的城市名称
-                    const locationNameElement = document.getElementById('current-location');
-                    if (locationNameElement) {
-                        locationNameElement.textContent = cityNameFromParent;
-                    }
-                } else {
-                    // 否则使用默认的位置显示
-                    updateLocationDisplay(selectedLocation);
+                
+                // 直接更新显示的城市名称
+                const locationNameElement = document.getElementById('current-location');
+                if (locationNameElement) {
+                    locationNameElement.textContent = selectedLocation || '-';
                 }
-
+                
                 // 尝试从心知天气API获取天气数据
                 fetchWeatherDataFromXinzhiAPI(selectedLocation);
-
+                
                 // 添加位置变更监听
                 if (locationSelector) {
                     locationSelector.addEventListener('change', function () {
                         selectedLocation = this.value;
-                        updateLocationDisplay(selectedLocation);
-
+                        
+                        // 更新显示的城市名称
+                        if (locationNameElement) {
+                            locationNameElement.textContent = selectedLocation || '-';
+                        }
+                        
                         // 重新获取天气数据
                         fetchWeatherDataFromXinzhiAPI(selectedLocation);
                     });
                 }
-
-                // 添加天气动画效果
-                addWeatherAnimation();
             }
-
 
             /**
              * 从心知天气API获取天气数据
@@ -394,7 +405,7 @@
 
                 try {
                     // 获取城市的名称
-                    let cityName = getLocationDisplayName(location);
+                    let cityName = location;
 
                     /**
                      * 简化处理城市名：
@@ -416,6 +427,7 @@
 
                     // 处理API返回的数据
                     if (weatherInfo && weatherInfo.results) {
+                        console.log('完整的天气API返回值:', JSON.stringify(weatherInfo, null, 2));
                         const processedData = processWeatherAPIResponse(weatherInfo);
                         updateWeatherUI(processedData);
                         updateWeatherForecast(processedData.forecast || []);
@@ -493,17 +505,6 @@
                     condition: day.text_day || day.text_night
                 }));
 
-                console.log('处理后的天气数据:', {
-                    temp,
-                    feels_like: '*', // daily接口没有体感温度
-                    condition,
-                    humidity,
-                    wind_speed,
-                    pressure: '*', // daily接口没有气压
-                    visibility: '*', // daily接口没有能见度
-                    forecast
-                });
-
                 return {
                     temp,
                     feels_like: '*', // daily接口没有体感温度
@@ -522,29 +523,6 @@
             function getDayOfWeek(date) {
                 const days = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
                 return days[date.getDay()];
-            }
-
-            /**
-             * 更新位置显示
-             */
-            function updateLocationDisplay(location) {
-                const locationNameElement = document.getElementById('current-location');
-                if (locationNameElement) {
-                    locationNameElement.textContent = getLocationDisplayName(location);
-                }
-            }
-
-            /**
-             * 获取位置的显示名称
-             */
-            function getLocationDisplayName(location) {
-                // 优先使用从父页面获取的城市名称
-                const cityNameFromParent = getCityNameFromParentPage();
-                if (cityNameFromParent) {
-                    return cityNameFromParent;
-                }
-                // 如果没有从父页面获取到有效名称，则使用传入的location或默认显示为"-"
-                return location || "*";
             }
 
             /**
@@ -588,13 +566,13 @@
                 iconElement.classList.add(iconClass);
 
                 // 更新详细信息 - 无条件替换占位符
-                document.getElementById('weather-humidity').textContent = weatherData.humidity = `${weatherData.humidity}%`;
+                document.getElementById('weather-humidity').textContent = `${weatherData.humidity}%`;
 
-                document.getElementById('weather-wind').textContent = weatherData.wind_speed = `${weatherData.wind_speed}m/s`;
+                document.getElementById('weather-wind').textContent = `${weatherData.wind_speed}m/s`;
 
-                document.getElementById('weather-pressure').textContent = weatherData.pressure = `${weatherData.pressure}hPa`;
+                document.getElementById('weather-pressure').textContent = `${weatherData.pressure}hPa`;
 
-                document.getElementById('weather-visibility').textContent = weatherData.visibility = `${weatherData.visibility}km`;
+                document.getElementById('weather-visibility').textContent = `${weatherData.visibility}km`;
             }
 
             /**
