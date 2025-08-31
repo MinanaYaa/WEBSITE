@@ -13,8 +13,13 @@
 </head>
 
 <body>
-  <!-- 加载头部组件 -->
-  <!-- <div id="header-container"></div> -->
+  <!-- 头部组件 -->
+  <header class="site-header">
+    <div class="header-content">
+      <h1 class="site-title">Zane的旅游网页</h1>
+      <p class="site-subtitle">探索世界的每一个角落，记录美好的旅行回忆</p>
+    </div>
+  </header>
 
   <!-- 加载导航栏组件 -->
   <div id="navigation-container"></div>
@@ -125,16 +130,7 @@
     document.addEventListener('DOMContentLoaded', function () {
       console.log('页面加载完成，开始加载组件');
 
-      // 加载头部组件
-      fetch('components/header.html')
-        .then(response => response.text())
-        .then(data => {
-          document.getElementById('header-container').innerHTML = data;
-        })
-        .catch(error => {
-          console.error('加载头部组件失败:', error);
-          document.getElementById('header-container').innerHTML = '<header><h1>旅游网站</h1><p>探索世界的每一个角落</p></header>';
-        });
+      // 头部组件已直接在HTML中添加，不再需要通过JavaScript加载
 
       // 加载导航栏组件
       fetch('components/navigation.html')
