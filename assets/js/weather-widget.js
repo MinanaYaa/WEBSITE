@@ -154,7 +154,7 @@ const WeatherWidget = {
 
         // 如果缓存存在且有效，直接使用缓存数据
         if (cachedData && cacheTime && (now - parseInt(cacheTime)) < cacheValidity) {
-
+            console.log('使用缓存数据');
             try {
                 const weatherInfo = JSON.parse(cachedData);
                 if (weatherInfo && weatherInfo.results) {
