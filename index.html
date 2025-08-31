@@ -14,33 +14,103 @@
 
 <body>
   <!-- 加载头部组件 -->
-  <div id="header-container"></div>
+  <!-- <div id="header-container"></div> -->
 
   <!-- 加载导航栏组件 -->
   <div id="navigation-container"></div>
   <main>
     <section id="destinations">
-      <h2>已出行地址</h2>
-      <ul>
-        <li>广州</li>
-        <li>深圳</li>
-        <li>珠海</li>
-        <li>湛江</li>
-        <li>惠州</li>
-        <li>武汉</li>
-        <li>梅州</li>
-        <!-- 可继续补充 -->
-      </ul>
-      <a class="route-link" href="destinations/meizhou/mzTravel.html">梅州旅游路线</a>
+      <h2 class="section-title">
+        <i class="fas fa-map-marker-alt"></i> 已出行地址
+      </h2>
+      <div class="destinations-grid">
+        <div class="destination-card">
+          <div class="destination-icon">
+            <i class="fas fa-city"></i>
+          </div>
+          <h3 class="destination-name">广州</h3>
+          <p class="destination-desc">千年商都，美食天堂</p>
+        </div>
+        <div class="destination-card">
+          <div class="destination-icon">
+            <i class="fas fa-building"></i>
+          </div>
+          <h3 class="destination-name">深圳</h3>
+          <p class="destination-desc">创新之都，现代之城</p>
+        </div>
+        <div class="destination-card">
+          <div class="destination-icon">
+            <i class="fas fa-umbrella-beach"></i>
+          </div>
+          <h3 class="destination-name">珠海</h3>
+          <p class="destination-desc">浪漫之城，海滨风光</p>
+        </div>
+        <div class="destination-card">
+          <div class="destination-icon">
+            <i class="fas fa-anchor"></i>
+          </div>
+          <h3 class="destination-name">湛江</h3>
+          <p class="destination-desc">港城风光，海鲜美食</p>
+        </div>
+        <div class="destination-card">
+          <div class="destination-icon">
+            <i class="fas fa-mountain"></i>
+          </div>
+          <h3 class="destination-name">惠州</h3>
+          <p class="destination-desc">山水之城，温泉胜地</p>
+        </div>
+        <div class="destination-card">
+          <div class="destination-icon">
+            <i class="fas fa-dragon"></i>
+          </div>
+          <h3 class="destination-name">武汉</h3>
+          <p class="destination-desc">江城武汉，九省通衢</p>
+        </div>
+        <div class="destination-card featured">
+          <div class="destination-icon">
+            <i class="fas fa-leaf"></i>
+          </div>
+          <h3 class="destination-name">梅州</h3>
+          <p class="destination-desc">客家之都，山水梅州</p>
+          <div class="destination-badge">热门推荐</div>
+        </div>
+      </div>
+      <div class="destination-highlight">
+        <a href="destinations/meizhou/mzTravel.html" class="highlight-button">
+          <i class="fas fa-route"></i> 探索梅州旅游路线
+        </a>
+      </div>
     </section>
     <section id="tips">
-      <h2>出行指南</h2>
-      <ul>
-        <li>提前预订车票和住宿，避免临时拥堵</li>
-        <li>关注天气变化，合理安排行程</li>
-        <li>尝试当地美食，感受风土人情</li>
-        <li>拍照留念，记得分享快乐</li>
-      </ul>
+      <h2 class="section-title">
+        <i class="fas fa-lightbulb"></i> 出行指南
+      </h2>
+      <div class="tips-container">
+        <div class="tip-card">
+          <div class="tip-icon">
+            <i class="fas fa-calendar-alt"></i>
+          </div>
+          <p class="tip-text">提前预订车票和住宿，避免临时拥堵</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">
+            <i class="fas fa-cloud-sun"></i>
+          </div>
+          <p class="tip-text">关注天气变化，合理安排行程</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">
+            <i class="fas fa-utensils"></i>
+          </div>
+          <p class="tip-text">尝试当地美食，感受风土人情</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">
+            <i class="fas fa-camera"></i>
+          </div>
+          <p class="tip-text">拍照留念，记得分享快乐</p>
+        </div>
+      </div>
     </section>
   </main>
   <!-- 加载页脚组件 -->
