@@ -15,14 +15,14 @@
     <!-- 使用Netlify代理函数加载高德地图API -->
     <script type="text/javascript">
         // 动态加载高德地图API，通过Netlify函数代理
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const script = document.createElement('script');
             script.src = '/api/map-api?url=https://webapi.amap.com/maps?v=1.4.15';
-            script.onload = function() {
+            script.onload = function () {
                 // 地图API加载完成后的回调
                 console.log('高德地图API加载完成');
             };
-            script.onerror = function() {
+            script.onerror = function () {
                 console.error('高德地图API加载失败，使用本地模拟地图');
             };
             document.head.appendChild(script);
@@ -297,7 +297,7 @@
                                 </div>
                                 <div>
                                     <p class="font-bold">09:30-11:30 高铁从陆丰到丰顺站</p>
-                                    <p class="text-gray-600 mt-1">二等座约83元/人，全程约2小时。</p>
+                                    <p class="text-gray-600 mt-1">二等座票价约83元/人，全程约2小时。</p>
                                 </div>
                             </li>
                             <li class="flex items-start">
@@ -307,7 +307,7 @@
                                 </div>
                                 <div>
                                     <p class="font-bold">12:00-13:00 午餐：丰顺大饭店</p>
-                                    <p class="text-gray-600 mt-1">当地特色农家菜，人均约60元。</p>
+                                    <p class="text-gray-600 mt-1">品尝当地特色农家菜，人均约60元。</p>
                                 </div>
                             </li>
                             <li class="flex items-start">
@@ -316,7 +316,7 @@
                                     <i class="fa fa-tree"></i>
                                 </div>
                                 <div>
-                                    <p class="font-bold">14:00-15:30 抵达龙归寨瀑布（丰顺县）</p>
+                                    <p class="font-bold">14:00-15:30 龙归寨瀑布（丰顺县）</p>
                                     <p class="text-gray-600 mt-1">门票48元/人，游览约1.5小时，欣赏粤东第一瀑的壮观景色。</p>
                                 </div>
                             </li>
@@ -327,7 +327,7 @@
                                 </div>
                                 <div>
                                     <p class="font-bold">16:00-17:00 顺风车到酒店</p>
-                                    <p class="text-gray-600 mt-1">约29元/人，前往梅州城区酒店。</p>
+                                    <p class="text-gray-600 mt-1">约29元/人。</p>
                                 </div>
                             </li>
                             <li class="flex items-start">
@@ -347,7 +347,7 @@
                                 </div>
                                 <div>
                                     <p class="font-bold">18:30-19:30 晚餐：围龙屋</p>
-                                    <p class="text-gray-600 mt-1">当地特色农家菜，人均约120元。</p>
+                                    <p class="text-gray-600 mt-1">品尝当地特色农家菜，人均约120元。</p>
                                 </div>
                             </li>
                             <li class="flex items-start">
@@ -374,11 +374,11 @@
                             <li class="flex items-start">
                                 <div
                                     class="bg-green-100 rounded-full w-8 h-8 flex items-center justify-center text-green-600 mr-3 mt-1 flex-shrink-0">
-                                    <i class="fa fa-university"></i>
+                                    <i class="fa fa-walking"></i>
                                 </div>
                                 <div>
                                     <p class="font-bold">09:30-11:30 千佛塔→客家博物馆</p>
-                                    <p class="text-gray-600 mt-1">免费参观，需现场预约，了解梅州佛教文化和客家历史。</p>
+                                    <p class="text-gray-600 mt-1">免费参观，需要现场预约，了解梅州的佛教文化和客家历史。</p>
                                 </div>
                             </li>
                             <li class="flex items-start">
@@ -394,21 +394,21 @@
                             <li class="flex items-start">
                                 <div
                                     class="bg-green-100 rounded-full w-8 h-8 flex items-center justify-center text-green-600 mr-3 mt-1 flex-shrink-0">
-                                    <i class="fa fa-tree"></i>
+                                    <i class="fa fa-walking"></i>
                                 </div>
                                 <div>
                                     <p class="font-bold">14:00-16:00 泮坑风景区</p>
-                                    <p class="text-gray-600 mt-1">免费参观，需提前预约，欣赏梅州自然风光。</p>
+                                    <p class="text-gray-600 mt-1">免费参观，需提前预约，欣赏自然风光，体验客家文化。</p>
                                 </div>
                             </li>
                             <li class="flex items-start">
                                 <div
                                     class="bg-green-100 rounded-full w-8 h-8 flex items-center justify-center text-green-600 mr-3 mt-1 flex-shrink-0">
-                                    <i class="fa fa-train"></i>
+                                    <i class="fa fa-car"></i>
                                 </div>
                                 <div>
-                                    <p class="font-bold">18:00 返程</p>
-                                    <p class="text-gray-600 mt-1">乘坐高铁从梅州回陆丰，二等座约120元/人。</p>
+                                    <p class="font-bold">18:00- 返程</p>
+                                    <p class="text-gray-600 mt-1">乘坐高铁从梅州回陆丰，二等座票价约120元/人。</p>
                                 </div>
                             </li>
                         </ul>
@@ -594,6 +594,49 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- 泮坑风景区 -->
+                <div class="attraction-card">
+                    <div class="attraction-image-container">
+                        <img class="attraction-image"
+                            src="https://cdn.jsdelivr.net/gh/13071558875/Photo/Photo/202508240852456.png" alt="泮坑风景区">
+                        <div class="attraction-rating">
+                            <span class="rating-stars">★★★★</span>
+                            <span class="rating-score">4.0</span>
+                        </div>
+                        <div class="attraction-tag">
+                            <span>4A景区</span>
+                        </div>
+                    </div>
+                    <div class="attraction-content">
+                        <h3 class="attraction-title">泮坑风景区</h3>
+                        <div class="attraction-meta">
+                            <div class="attraction-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>梅州市梅江区</span>
+                            </div>
+                            <div class="attraction-category">
+                                <span>自然景观</span>
+                            </div>
+                        </div>
+                        <p class="attraction-description">
+                            泮坑风景区是梅州著名的自然风景区，以山水风光和客家文化为特色，有溪流、湖泊、山林等自然景观。
+                        </p>
+                        <div class="attraction-info">
+                            <div class="info-item">
+                                <i class="fas fa-clock"></i>
+                                <span>开放时间: 08:00-18:00</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-ticket-alt"></i>
+                                <span>门票: 免费</span>
+                            </div>
+                        </div>
+                        <div class="attraction-actions">
+                            <button class="attraction-detail-btn">查看详情</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -732,6 +775,22 @@
                                     <p>可乘坐梅州城区公交车在北街站下车，或乘坐出租车直达。</p>
                                 `;
                                 break;
+                            case '5':
+                                title = '泮坑风景区';
+                                content = `
+                                    <div class="mb-4">
+                                        <img src="https://cdn.jsdelivr.net/gh/13071558875/Photo/Photo/202508240852456.png" alt="泮坑风景区" class="w-full max-w-full h-48 object-cover object-center mx-auto rounded-lg">
+                                    </div>
+                                    <h4 class="text-lg font-bold mb-2">景点介绍</h4>
+                                    <p class="mb-4">泮坑风景区位于梅州市梅江区三角镇，是梅州著名的自然风景区。景区内有溪流、湖泊、山林等自然景观，还有客家特色的建筑和文化元素。游客可以在此欣赏自然风光，体验客家文化，是休闲度假的好去处。</p>
+                                    <h4 class="text-lg font-bold mb-2">开放时间</h4>
+                                    <p class="mb-4">08:00-18:00</p>
+                                    <h4 class="text-lg font-bold mb-2">门票信息</h4>
+                                    <p class="mb-4">免费参观，但需要提前预约。可通过官方网站或景区公众号进行预约。</p>
+                                    <h4 class="text-lg font-bold mb-2">交通指南</h4>
+                                    <p>可乘坐梅州城区公交车在泮坑风景区站下车，或乘坐出租车直达。从梅州城区出发，车程约20分钟。</p>
+                                `;
+                                break;
                         }
 
                         modalTitle.textContent = title;
@@ -777,28 +836,29 @@
                             { name: '梅州站', lng: 116.12, lat: 24.29, type: 'station', color: '#FF6B6B' },
                             { name: '千佛塔', lng: 116.09, lat: 24.26, type: 'attraction', color: '#45B7D1' },
                             { name: '客家博物馆', lng: 116.11, lat: 24.28, type: 'attraction', color: '#96CEB4' },
-                            { name: '北街', lng: 116.09, lat: 24.29, type: 'attraction', color: '#FECA57' }
+                            { name: '北街', lng: 116.09, lat: 24.29, type: 'attraction', color: '#FECA57' },
+                            { name: '泮坑风景区', lng: 116.14, lat: 24.33, type: 'attraction', color: '#FF9F43' }
                         ];
 
                         // 添加景点标记
                         const markers = window.TravelMap.addAttractionMarkers(map, attractions);
 
                         // 绘制路线
-                        // 第一天路线: 陆丰站 -> 丰顺站 -> 龙归寨瀑布 -> 梅州站
+                        // 第一天路线: 陆丰站 -> 丰顺站 -> 龙归寨瀑布 -> 丽呈睿轩酒店
                         const day1Route = [
-                            { lng: 115.81, lat: 22.97 }, // 陆丰站
-                            { lng: 116.12, lat: 23.76 }, // 丰顺站
-                            { lng: 116.23, lat: 24.47 }, // 龙归寨瀑布
-                            { lng: 116.12, lat: 24.29 }  // 梅州站
+                            { lng: 115.733297, lat: 22.947809 }, // 陆丰站
+                            { lng: 116.190474, lat: 23.751125 }, // 丰顺站
+                            { lng: 116.279318, lat: 23.804617 }, // 龙归寨瀑布
+                            { lng: 116.135768, lat: 24.273319 }  // 丽呈睿轩酒店
                         ];
 
-                        // 第二天路线: 梅州站 -> 千佛塔 -> 客家博物馆 -> 北街 -> 梅州站
+                        // 第二天路线: 丽呈睿轩酒店 -> 千佛塔 -> 客家博物馆 -> 泮坑风景区 -> 梅州站
                         const day2Route = [
-                            { lng: 116.12, lat: 24.29 }, // 梅州站
-                            { lng: 116.09, lat: 24.26 }, // 千佛塔
-                            { lng: 116.11, lat: 24.28 }, // 客家博物馆
-                            { lng: 116.09, lat: 24.29 }, // 北街
-                            { lng: 116.12, lat: 24.29 }  // 梅州站（返程）
+                            { lng: 116.135768, lat: 24.273319 }, // 丽呈睿轩酒店
+                            { lng: 116.141917, lat: 24.305451 }, // 千佛塔
+                            { lng: 116.131916, lat: 24.310328 }, // 客家博物馆
+                            { lng: 116.139797, lat: 24.245021 }, // 泮坑风景区
+                            { lng: 116.130709, lat: 24.258287 }  // 梅州站（返程）
                         ];
 
                         // 存储所有路线
