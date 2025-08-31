@@ -12,9 +12,22 @@
     <link rel="stylesheet" href="../../assets/css/main.css">
     <link rel="stylesheet" href="../../assets/css/responsive.css">
 
-    <!-- 引入高德地图API -->
-    <script type="text/javascript"
-        src="https://webapi.amap.com/maps?v=1.4.15&key=93336cce45884cdac08371812275ede4"></script>
+    <!-- 使用Netlify代理函数加载高德地图API -->
+    <script type="text/javascript">
+        // 动态加载高德地图API，通过Netlify函数代理
+        document.addEventListener('DOMContentLoaded', function() {
+            const script = document.createElement('script');
+            script.src = '/api/map-api?url=https://webapi.amap.com/maps?v=1.4.15';
+            script.onload = function() {
+                // 地图API加载完成后的回调
+                console.log('高德地图API加载完成');
+            };
+            script.onerror = function() {
+                console.error('高德地图API加载失败，使用本地模拟地图');
+            };
+            document.head.appendChild(script);
+        });
+    </script>
 
     <!-- 引入公共JS文件 -->
     <script src="../../assets/js/main.js"></script>
@@ -222,12 +235,11 @@
                                         const userLocation = travelData.getCurrentLocation();
                                         if (userLocation && userLocation.latitude && userLocation.longitude) {
                                             location = userLocation;
-                                            console.log('使用TravelData提供的位置信息:', location);
                                         } else {
-                                            console.log('TravelData未提供有效位置信息，使用默认位置');
+                                            // 使用默认位置
                                         }
                                     } catch (error) {
-                                        console.log('无法获取TravelData模块，使用默认位置:', error.message);
+                                        // 使用默认位置
                                     }
 
                                     // 等待WeatherWidget模块加载完成并初始化
@@ -235,18 +247,15 @@
                                         if (window.WeatherWidget && typeof window.WeatherWidget.init === 'function') {
                                             clearInterval(widgetInitInterval);
                                             window.WeatherWidget.init(location.latitude, location.longitude);
-                                            console.log('天气组件初始化完成');
                                         }
                                     }, 300);
 
                                     // 设置初始化超时
                                     setTimeout(() => {
                                         clearInterval(widgetInitInterval);
-                                        console.log('天气组件初始化流程已启动');
                                     }, 5000);
 
                                 } catch (error) {
-                                    console.error('天气组件初始化失败:', error);
                                     container.innerHTML =
                                         '<div class="bg-white p-4 rounded-lg shadow-md">\n' +
                                         '  <p class="text-red-500">天气信息加载失败，请稍后刷新页面重试。</p>\n' +

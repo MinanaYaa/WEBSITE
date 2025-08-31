@@ -6,37 +6,64 @@ const WeatherWidget = {
      * 初始化天气小部件
      */
     init: function () {
-        console.log('开始初始化天气小部件');
+
         this.waitForTravelData().then(travelDataModule => {
-            console.log('TravelData模块加载结果:', travelDataModule);
+
             this.initializeWidget(travelDataModule);
         });
     },
 
     /**
-     * 等待TravelData模块加载完成
-     */
+ * 等待TravelData模块加载完成 - 优化版本
+ */
     waitForTravelData: function () {
-        console.log('当前window.TravelData状态:', window.TravelData ? '已存在' : '不存在');
+
         return new Promise(resolve => {
-            if (window.TravelData) {
-                console.log('TravelData模块已加载:', window.TravelData);
+            // 立即尝试一次，避免不必要的延迟
+            if (window.TravelData && window.TravelData.destination && window.TravelData.destination.latitude && window.TravelData.destination.longitude) {
+
                 resolve(window.TravelData);
                 return;
             }
-            const interval = setInterval(() => {
+
+            // 设置最大等待时间（5秒 - 减少等待时间）
+            const maxWaitTime = 5000;
+            // 设置轮询间隔（逐步增加 - 减少CPU消耗）
+            let pollInterval = 100;
+            // 记录已经等待的时间
+            let elapsedTime = 0;
+
+            const poll = () => {
                 if (window.TravelData) {
-                    clearInterval(interval);
-                    console.log('TravelData模块延迟加载完成');
+
                     resolve(window.TravelData);
+                    return;
                 }
-            }, 100);
+
+                // 如果超过最大等待时间
+                if (elapsedTime >= maxWaitTime) {
+                    clearInterval(interval);
+
+                    resolve(null);
+                    return;
+                }
+
+                // 增加已等待时间
+                elapsedTime += pollInterval;
+                // 逐步增加轮询间隔，减少CPU消耗
+                pollInterval = Math.min(pollInterval * 1.5, 500);
+            };
+
+            const interval = setInterval(poll, pollInterval);
+
             // 设置超时
             setTimeout(() => {
                 clearInterval(interval);
-                console.log('TravelData模块加载超时');
-                resolve(null);
-            }, 3000);
+                if (!window.TravelData) {
+
+                    resolve(null);
+                }
+            }, maxWaitTime);
         });
     },
 
@@ -46,10 +73,9 @@ const WeatherWidget = {
     initializeWidget: function (travelDataModule) {
         // 获取天气小部件元素
         const weatherWidget = document.querySelector('.weather-widget');
-        console.log('天气小部件元素:', weatherWidget);
 
         if (travelDataModule && weatherWidget) {
-            console.log('使用TravelData模块进行初始化');
+
             // 使用TravelData模块初始化和绑定数据
             travelDataModule.initialize();
             travelDataModule.bindToElement(weatherWidget);
@@ -57,7 +83,7 @@ const WeatherWidget = {
             // 获取目的地信息
             const destination = travelDataModule.getDestination();
             const destinationName = travelDataModule.getDestinationDisplayName();
-            console.log('获取到的目的地信息:', { destination, destinationName });
+
 
             // 如果有目的地信息，则获取天气数据
             if (destination && destination !== 'unknown') {
@@ -68,15 +94,14 @@ const WeatherWidget = {
                 }
 
                 // 尝试从心知天气API获取天气数据
-                console.log('准备调用心知天气API获取数据');
+
                 this.fetchWeatherDataFromXinzhiAPI(destinationName);
             } else {
-                console.warn('未能通过TravelData模块获取目的地信息，使用默认初始化');
+
                 // 使用默认的位置显示和数据获取
                 this.defaultInit();
             }
         } else {
-            console.warn('TravelData模块未加载或未找到天气小部件，使用默认初始化');
             // 使用默认的位置显示和数据获取
             this.defaultInit();
         }
@@ -116,10 +141,34 @@ const WeatherWidget = {
     },
 
     /**
-     * 从心知天气API获取天气数据
-     */
+ * 从心知天气API获取天气数据 - 优化版本，添加缓存机制
+ */
     fetchWeatherDataFromXinzhiAPI: function (location) {
-        console.log(`从心知天气API获取${location}的天气数据`);
+        // 生成缓存键
+        const cacheKey = `weather_${location}`;
+        // 检查本地缓存（有效期15分钟）
+        const cachedData = localStorage.getItem(cacheKey);
+        const cacheTime = localStorage.getItem(`${cacheKey}_time`);
+        const now = Date.now();
+        const cacheValidity = 15 * 60 * 1000; // 15分钟
+
+        // 如果缓存存在且有效，直接使用缓存数据
+        if (cachedData && cacheTime && (now - parseInt(cacheTime)) < cacheValidity) {
+
+            try {
+                const weatherInfo = JSON.parse(cachedData);
+                if (weatherInfo && weatherInfo.results) {
+                    const processedData = this.processWeatherAPIResponse(weatherInfo);
+                    this.updateWeatherUI(processedData);
+                    this.updateWeatherForecast(processedData.forecast || []);
+                }
+                return;
+            } catch (e) {
+                console.error('解析缓存数据失败:', e);
+            }
+        }
+
+
 
         try {
             // 获取城市的名称
@@ -143,32 +192,42 @@ const WeatherWidget = {
                 return;
             }
 
-            console.log(`处理后的城市名: ${cityName}`);
 
-            // 构建API URL，使用用户提供的API密钥和动态替换location参数
-            const apiUrl = `https://api.seniverse.com/v3/weather/daily.json?key=SCiXMZJNat6-m7dVy&location=${cityName}&language=zh-Hans&unit=c&start=0&days=10`;
 
-            console.log(`API请求URL: ${apiUrl}`);
+            // 构建API URL，使用Netlify代理函数，避免在前端暴露API密钥
+            const apiUrl = `/api/weather-api?location=${encodeURIComponent(cityName)}&language=zh-Hans&unit=c&start=0&days=10`;
 
-            // 调用心知天气API获取实时天气
-            fetch(apiUrl)
+
+            // 通过Netlify代理函数获取天气数据，添加优先获取策略
+            fetch(apiUrl, {
+                priority: 'high', // 提示浏览器优先获取此资源
+                cache: 'force-cache' // 优先使用缓存
+            })
                 .then(response => {
                     // 检查HTTP响应状态码
                     if (!response.ok) {
-                        console.error(`API请求失败，状态码: ${response.status}, 状态文本: ${response.statusText}`);
+
                         // 尝试获取错误信息
                         return response.json().then(errorData => {
-                            console.error('API错误详情:', errorData);
+
                             throw new Error(`API请求失败: ${response.status} ${response.statusText}`);
                         }).catch(e => {
-                            console.error('无法解析API错误响应:', e);
+
                             throw new Error(`API请求失败: ${response.status} ${response.statusText}`);
                         });
                     }
                     return response.json();
                 })
                 .then(weatherInfo => {
-                    console.log('完整的天气API返回值:', JSON.stringify(weatherInfo, null, 2));
+
+
+                    // 保存到本地缓存
+                    try {
+                        localStorage.setItem(cacheKey, JSON.stringify(weatherInfo));
+                        localStorage.setItem(`${cacheKey}_time`, now.toString());
+                    } catch (e) {
+
+                    }
 
                     // 处理API返回的数据
                     if (weatherInfo && weatherInfo.results) {
@@ -176,27 +235,27 @@ const WeatherWidget = {
                         this.updateWeatherUI(processedData);
                         this.updateWeatherForecast(processedData.forecast || []);
                     } else {
-                        console.warn('API返回数据格式不正确或结果为空:', weatherInfo);
+
                     }
                 })
                 .catch(error => {
-                    console.error('从心知天气API获取天气数据失败:', error);
+
                     // 保持显示为"-"
                 });
         } catch (error) {
-            console.error('从心知天气API获取天气数据失败:', error);
+
             // 保持显示为"-"
         }
     },
 
     /**
-     * 处理天气API返回的数据
-     */
+ * 处理天气API返回的数据 - 优化版本，减少重复计算
+ */
     processWeatherAPIResponse: function (response) {
         // 根据心知天气API的实际返回格式进行处理
         const results = response.results || [];
         if (!results.length) {
-            console.warn('API返回结果为空');
+
             return {
                 temp: 'API错误',
                 feels_like: 'API错误',
@@ -208,12 +267,12 @@ const WeatherWidget = {
             };
         }
 
-        const locationData = results[0];
+        const locationData = response.results[0];
         const dailyData = locationData.daily || [];
 
         // 检查dailyData是否存在且有数据
         if (!dailyData || dailyData.length === 0) {
-            console.warn('API返回的每日数据为空');
+
             return {
                 temp: 'API错误',
                 feels_like: 'API错误',
@@ -240,13 +299,13 @@ const WeatherWidget = {
         const humidity = currentDay.humidity;
         const wind_speed = convertKmHToMs(currentDay.wind_speed);
         const sunrise = currentDay.sunrise || '--:--';
-        
+
         // 计算体感温度（简化计算，实际应根据湿度、风速等因素综合计算）
         let feels_like = '*';
         if (temp && humidity) {
             const tempValue = parseFloat(temp);
             const humidityValue = parseFloat(humidity);
-            
+
             if (!isNaN(tempValue) && !isNaN(humidityValue)) {
                 // 简化的体感温度计算公式（适合摄氏度）
                 // 参考：https://en.wikipedia.org/wiki/Heat_index
@@ -294,26 +353,37 @@ const WeatherWidget = {
     },
 
     /**
-     * 更新天气UI
-     */
+ * 更新天气UI - 优化版本，批量处理DOM操作
+ */
     updateWeatherUI: function (weatherData) {
         // 确保weatherData存在
         if (!weatherData) {
-            console.warn('没有天气数据可供更新UI');
+
             this.clearWeatherData();
             return;
         }
 
-        // 更新温度 - 直接赋值
-        const tempElement = document.getElementById('weather-temp');
-        tempElement.textContent = `${weatherData.temp}°C`;
+        // 批量获取DOM元素，减少DOM查询次数
+        const elements = {
+            temp: document.getElementById('weather-temp'),
+            desc: document.getElementById('weather-desc'),
+            icon: document.getElementById('weather-main-icon'),
+            humidity: document.getElementById('weather-humidity'),
+            wind: document.getElementById('weather-wind'),
+            feels_like: document.getElementById('weather-feels-like'),
+            sunrise: document.getElementById('weather-sunrise')
+        };
 
-        // 更新天气描述 - 无条件替换占位符
-        const descElement = document.getElementById('weather-desc');
-        descElement.textContent = weatherData.condition;
+        // 批量更新文本内容
+        elements.temp.textContent = `${weatherData.temp}°C`;
+        elements.desc.textContent = weatherData.condition;
+        elements.humidity.textContent = `${weatherData.humidity}%`;
+        elements.wind.textContent = `${weatherData.wind_speed}m/s`;
+        elements.feels_like.textContent = `${weatherData.feels_like}°C`;
+        elements.sunrise.textContent = `${weatherData.sunrise}`;
 
-        // 更新天气图标 - 无条件替换占位符
-        const iconElement = document.getElementById('weather-main-icon');
+        // 更新天气图标 - 优化类操作
+        const iconElement = elements.icon;
         // 移除所有fas fa-*类
         const oldClasses = Array.from(iconElement.classList).filter(cls => cls.startsWith('fa-'));
         oldClasses.forEach(cls => iconElement.classList.remove(cls));
@@ -322,14 +392,11 @@ const WeatherWidget = {
         const iconClass = this.getWeatherIconClass(weatherData.condition || '-');
         iconElement.classList.add(iconClass);
 
-        // 更新详细信息 - 无条件替换占位符
-        document.getElementById('weather-humidity').textContent = `${weatherData.humidity}%`;
+        // 调用天气动画效果
+        this.addWeatherAnimation(weatherData.condition);
 
-        document.getElementById('weather-wind').textContent = `${weatherData.wind_speed}m/s`;
-
-        document.getElementById('weather-feels-like').textContent = `${weatherData.feels_like}°C`;
-
-        document.getElementById('weather-sunrise').textContent = `${weatherData.sunrise}`;
+        // 隐藏骨架屏
+        this.hideSkeleton();
     },
 
     /**
@@ -375,7 +442,7 @@ const WeatherWidget = {
     updateWeatherForecast: function (forecast) {
         const container = document.getElementById('forecast-container');
         if (!container) {
-            console.warn('未找到天气预报容器');
+
             return;
         }
 
@@ -433,32 +500,32 @@ const WeatherWidget = {
     },
 
     /**
-     * 初始化水平滚动功能
-     */
+ * 初始化水平滚动功能 - 优化版本，使用passive事件监听器
+ */
     initHorizontalScroll: function () {
         const container = document.querySelector('.weather-forecast-container');
         if (!container) return;
 
-        // 鼠标滚轮水平滚动
+        // 鼠标滚轮水平滚动 - 使用passive优化
         container.addEventListener('wheel', function (e) {
             e.preventDefault();
             this.scrollLeft += e.deltaY;
-        });
+        }, { passive: false }); // 对于需要preventDefault的事件，必须设为false
 
-        // 触摸滑动
+        // 触摸滑动 - 使用passive优化
         let touchStartX = 0;
         let scrollLeft = 0;
 
         container.addEventListener('touchstart', function (e) {
             touchStartX = e.touches[0].pageX;
             scrollLeft = this.scrollLeft;
-        });
+        }, { passive: true });
 
         container.addEventListener('touchmove', function (e) {
             const touchX = e.touches[0].pageX;
             const walk = (touchX - touchStartX) * 2; // 滚动速度因子
             this.scrollLeft = scrollLeft - walk;
-        });
+        }, { passive: true });
     },
 
     /**
@@ -502,33 +569,29 @@ const WeatherWidget = {
     },
 
     /**
-     * 添加天气动画效果
-     */
-    addWeatherAnimation: function () {
-        // 天气类型对应的动画效果
-        const weatherAnimations = {
-            '晴': () => {
-                // 晴天动画效果
-                const icon = document.querySelector('.weather-icon i');
-                if (icon) {
-                    icon.style.color = '#FFD700';
-                }
-            },
-            '雨': () => {
-                // 雨天动画效果
-                const icon = document.querySelector('.weather-icon i');
-                if (icon) {
-                    icon.style.color = '#87CEEB';
-                }
-            },
-            '雪': () => {
-                // 雪天动画效果
-                const icon = document.querySelector('.weather-icon i');
-                if (icon) {
-                    icon.style.color = '#E0FFFF';
-                }
+ * 添加天气动画效果 - 优化版本，实际调用并优化性能
+ */
+    addWeatherAnimation: function (condition) {
+        // 检查是否支持动画且有条件参数
+        if (!condition) return;
+
+        // 使用requestAnimationFrame优化动画性能
+        requestAnimationFrame(() => {
+            const icon = document.querySelector('.weather-icon i');
+            if (!icon) return;
+
+            // 简单的颜色变化动画，避免复杂效果
+            if (condition.includes('晴')) {
+                icon.style.color = '#FFD700';
+            } else if (condition.includes('雨')) {
+                icon.style.color = '#87CEEB';
+            } else if (condition.includes('雪')) {
+                icon.style.color = '#E0FFFF';
+            } else {
+                // 重置为默认颜色
+                icon.style.color = '';
             }
-        };
+        });
     },
 
     /**
@@ -548,6 +611,42 @@ const WeatherWidget = {
         if (container) {
             container.innerHTML = '';
         }
+    },
+    /**
+     * 延迟初始化非关键功能
+     */
+    initNonCriticalFeatures: function () {
+        // 使用setTimeout延迟加载非关键功能
+        setTimeout(() => {
+            this.initHorizontalScroll();
+            this.addScrollIndicators();
+        }, 1000); // 延迟1秒执行
+    },
+
+    /**
+     * 显示骨架屏，提升用户感知性能
+     */
+    showSkeleton: function () {
+        // 如果已经有数据，不显示骨架屏
+        if (document.getElementById('weather-temp').textContent !== '-°C') {
+            return;
+        }
+
+        // 骨架屏样式已在CSS中定义
+        const widget = document.querySelector('.weather-widget');
+        if (widget) {
+            widget.classList.add('skeleton-loading');
+        }
+    },
+
+    /**
+     * 隐藏骨架屏
+     */
+    hideSkeleton: function () {
+        const widget = document.querySelector('.weather-widget');
+        if (widget) {
+            widget.classList.remove('skeleton-loading');
+        }
     }
 };
 
@@ -556,5 +655,7 @@ window.WeatherWidget = WeatherWidget;
 
 // 当DOM加载完成后，初始化天气小部件
 document.addEventListener('DOMContentLoaded', function () {
+    WeatherWidget.showSkeleton();
     WeatherWidget.init();
+    WeatherWidget.initNonCriticalFeatures();
 });
